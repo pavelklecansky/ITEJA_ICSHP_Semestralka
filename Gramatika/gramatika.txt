@@ -1,0 +1,39 @@
+program = block;
+
+block = {var} {statement};
+
+var = "var" identifier "=" (string | number) ;
+
+statement = ifStatement | whileStatement | callStatement;
+
+ifStatement = "if" "(" condition ")"  "{" statement "}";
+
+whileStatement = "while" "(" condition ")"  "{" statement "}";
+
+callStatement = ("System." | "Draw.") identifier "(" (expression | string ) ")";
+
+condition = expression ("=="| "!=" | ">=" | ">" | "<=" | "<") expression;
+
+expression = ["-" | "+"] term {("+" | "-") term};
+
+term = factor {("*"|"/") factor};
+
+factor = identifier | number | "(" expression ")";
+
+identifier = ("_" | letter) {letter | "_" | digit};
+
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+
+letter = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" 
+       | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" 
+       | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" 
+       | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" 
+       | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" 
+       | "T" | "U" | "V" | "W" | "X" | "Y" | "Z";
+
+number = ["-" | "+"] {digit} ["."] {digit};
+
+(*Vypůjčeno z specifikace jazyka Go (https://golang.org/ref/spec#String_literals)*)
+string = '"' {unicode_char | newline } '"';
+unicode_char   = /* an arbitrary Unicode code point except newline */;
+newline        = /* the Unicode code point U+000A */;
