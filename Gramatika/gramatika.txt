@@ -10,7 +10,7 @@ ifStatement = "if" "(" condition ")"  "{" statement "}";
 
 whileStatement = "while" "(" condition ")"  "{" statement "}";
 
-callStatement = ("System." | "Draw.") identifier "(" (expression | string ) ")";
+callStatement = ("System." | "Turtle.") identifier "(" (expression | string ) ")";
 
 condition = expression ("=="| "!=" | ">=" | ">" | "<=" | "<") expression;
 
