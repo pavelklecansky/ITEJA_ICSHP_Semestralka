@@ -31,7 +31,7 @@
         Var,
         While,
         If,
-        Draw,
+        Turtle,
         System,
 
         Eof

@@ -18,7 +18,7 @@ namespace Language
             Keywords.Add("while", TokenType.While);
             Keywords.Add("if", TokenType.If);
             Keywords.Add("System", TokenType.System);
-            Keywords.Add("Draw", TokenType.Draw);
+            Keywords.Add("Draw", TokenType.Turtle);
         }
 
         public Lexer(string source)
