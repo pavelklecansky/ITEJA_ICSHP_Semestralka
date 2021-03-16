@@ -2,21 +2,27 @@ program = block$;
 
 block = {statement};
 
-statement = ifStatement | whileStatement | callStatement | var | deklarace ;
+statement = ifStatement | whileStatement | callStatement | var | reassignment ;
 
 var = "var" identifier "=" (expression|string);
 
-deklarace = identifier "=" (expression|string);
+reassignment = identifier "=" (expression|string);
 
-ifStatement = "if" "(" condition ")"  "{" block "}" ["else" "{" block "}"];
+ifStatement = "if" "(" expression ")"  "{" block "}" ["else" "{" block "}"];
 
-whileStatement = "while" "(" condition ")"  "{" block "}";
+whileStatement = "while" "(" expression ")"  "{" block "}";
 
-callStatement = ("System." | "Turtle.") identifier "(" (expression | string ) ")";
+callStatement = ("System." | "Turtle.") identifier "(" [paramList] ")";
+
+expression = condition | simpleExpression ;
 
 condition = expression ("=="| "!=" | ">=" | ">" | "<=" | "<") expression;
 
-expression = ["-" | "+"] term {("+" | "-") term};
+simpleExpression = ["-" | "+"] term {("+" | "-") term};
+
+paramList =  param {"," param};
+
+param = (expression|string);
 
 term = factor {("*"|"/"|"%") factor};
 

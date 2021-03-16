@@ -8,4 +8,4 @@ while(x < sideLenght){
     Turtle.right(angle)
     x = x + 1
 }    
-Turtle.done("Konec")
+Turtle.done()
