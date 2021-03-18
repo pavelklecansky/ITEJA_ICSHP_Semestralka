@@ -49,6 +49,12 @@ namespace Language
                 case ')':
                     AddToken(TokenType.RightParen);
                     break;
+                case '{':
+                    AddToken(TokenType.LeftBracket);
+                    break;
+                case '}':
+                    AddToken(TokenType.RightBracket);
+                    break;
                 case ';':
                     AddToken(TokenType.Semicolon);
                     break;
@@ -151,12 +157,22 @@ namespace Language
 
         private void ReadNumber()
         {
-            while (char.IsNumber(LookAhead()))
+            while (char.IsDigit(LookAhead()))
             {
                 GetCharAndAdvance();
             }
 
-            AddToken(TokenType.Number, int.Parse(_source.Substring(_start, _current - _start)));
+            if (LookAhead() == '.' && char.IsDigit(LookAheadNext()))
+            {
+                // Consume the "."
+                GetCharAndAdvance();
+
+                while (char.IsDigit(LookAhead())) GetCharAndAdvance();
+            }
+
+            AddToken(TokenType.Number,
+                double.Parse(_source.Substring(_start, _current - _start),
+                    System.Globalization.CultureInfo.InvariantCulture));
         }
 
         private char LookAhead()
@@ -167,6 +183,12 @@ namespace Language
             }
 
             return _source[_current];
+        }
+
+        private char LookAheadNext()
+        {
+            if (_current + 1 >= _source.Length) return '\0';
+            return _source[_current + 1];
         }
 
         private bool IsNext(char expected)

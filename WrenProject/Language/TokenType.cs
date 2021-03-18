@@ -12,7 +12,9 @@
         LeftParen,
         RightParen,
         Period,
-
+        LeftBracket,
+        RightBracket,
+        
         //Jedno nebo dvou charakterové tokeny
         Greater,
         GreaterEqual,

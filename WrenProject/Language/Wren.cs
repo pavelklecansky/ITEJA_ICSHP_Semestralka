@@ -9,7 +9,17 @@ namespace Language
 
         static void Main(string[] args)
         {
-            var source = $"System.print(\"Hi\")";
+            var source = @"var numberOfSides = 6
+var sideLenght = 70
+var angle = 360 / numberOfSides
+var x = 0
+ 
+while(x < sideLenght){
+    Turtle.forward(numberOfSides)
+    Turtle.right(angle)
+    x = x + 1
+}    
+Turtle.done()";
             Lexer lexer = new Lexer(source);
 
             List<Token> tokens = lexer.GetTokens();
