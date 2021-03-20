@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace Language
+namespace Language.Lexer
 {
     public class Lexer
     {
@@ -17,8 +18,9 @@ namespace Language
             Keywords.Add("var", TokenType.Var);
             Keywords.Add("while", TokenType.While);
             Keywords.Add("if", TokenType.If);
+            Keywords.Add("else", TokenType.Else);
             Keywords.Add("System", TokenType.System);
-            Keywords.Add("Draw", TokenType.Turtle);
+            Keywords.Add("Turtle", TokenType.Turtle);
         }
 
         public Lexer(string source)
@@ -67,6 +69,9 @@ namespace Language
                 case '/':
                     AddToken(TokenType.Slash);
                     break;
+                case '%':
+                    AddToken(TokenType.Modulo);
+                    break;
                 case '*':
                     AddToken(TokenType.Star);
                     break;
@@ -76,13 +81,16 @@ namespace Language
                 case '.':
                     AddToken(TokenType.Period);
                     break;
+                case '!':
+                    AddToken(IsNext('=') ? TokenType.NotEqual : throw new ArgumentException("Bad syntax"));
+                    break;
                 case '=':
                     AddToken(IsNext('=') ? TokenType.Equal : TokenType.Assignment);
                     break;
-                case '>':
+                case '<':
                     AddToken(IsNext('=') ? TokenType.LessEqual : TokenType.Less);
                     break;
-                case '<':
+                case '>':
                     AddToken(IsNext('=') ? TokenType.GreaterEqual : TokenType.Greater);
                     break;
                 case ' ':
@@ -164,9 +172,7 @@ namespace Language
 
             if (LookAhead() == '.' && char.IsDigit(LookAheadNext()))
             {
-                // Consume the "."
                 GetCharAndAdvance();
-
                 while (char.IsDigit(LookAhead())) GetCharAndAdvance();
             }
 

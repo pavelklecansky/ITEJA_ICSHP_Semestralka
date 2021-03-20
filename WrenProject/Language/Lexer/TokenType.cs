@@ -14,6 +14,7 @@
         Period,
         LeftBracket,
         RightBracket,
+        Modulo,
         
         //Jedno nebo dvou charakterové tokeny
         Greater,
@@ -22,6 +23,7 @@
         LessEqual,
         Assignment,
         Equal,
+        NotEqual,
 
 
         // Litrály
@@ -35,6 +37,7 @@
         If,
         Turtle,
         System,
+        Else,
 
         Eof
     }
