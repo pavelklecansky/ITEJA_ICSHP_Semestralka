@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Language.Parser;
 
 namespace Language
 {
@@ -9,25 +10,26 @@ namespace Language
 
         static void Main(string[] args)
         {
-            var source = @"var numberOfSides = 6
-var sideLenght = 70
-var angle = 360 / numberOfSides
-var x = 0
- 
-while(x < sideLenght){
-    Turtle.forward(numberOfSides)
-    Turtle.right(angle)
-    x = x + 1
-}    
-Turtle.done()";
-            Lexer lexer = new Lexer(source);
+            var source = @"
+Turtle.left(90)
+Turtle.forward(100)
+Turtle.right(150)
+Turtle.forward(70)
+Turtle.left(120)
+Turtle.forward(70)
+Turtle.right(150)
+Turtle.forward(100)
+                            Turtle.done()";
+            var lexer = new Lexer.Lexer(source);
+
 
             List<Token> tokens = lexer.GetTokens();
 
-            foreach (var token in tokens)
-            {
-                Console.WriteLine(token);
-            }
+            var statements = new Parser.Parser(tokens).Parse();
+
+            var inter = new Interpreter(statements);
+            inter.Interpret();
+            
         }
 
         public static void Error(int line, string message)

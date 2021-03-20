@@ -2,7 +2,18 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net472</TargetFramework>
+        <LangVersion>9</LangVersion>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="System.Windows.Forms" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="DrawingPanel.cs">
+        <SubType>Form</SubType>
+      </Compile>
+    </ItemGroup>
 
 </Project>

@@ -14,19 +14,23 @@ whileStatement = "while" "(" expression ")"  "{" block "}";
 
 callStatement = ("System." | "Turtle.") identifier "(" [paramList] ")";
 
-expression = condition | simpleExpression ;
-
-condition = expression ("=="| "!=" | ">=" | ">" | "<=" | "<") expression;
-
-simpleExpression = ["-" | "+"] term {("+" | "-") term};
-
 paramList =  param {"," param};
 
 param = (expression|string);
 
-term = factor {("*"|"/"|"%") factor};
+expression = equality;
 
-factor = identifier | number | "(" expression ")";
+equality = comparison {("!=" | "==") comparison}; 
+
+comparison = term {( ">=" | ">" | "<=" | "<") term};
+
+term = factor {("+" | "-") factor};
+
+factor= unary {("*"|"/"|"%") unary};
+
+unary = ["-" | "+"] unary | primary;
+
+primary = identifier | number | "(" expression ")";
 
 identifier = /[A-Za-z\_]+/;
 

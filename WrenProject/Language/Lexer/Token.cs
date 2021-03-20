@@ -4,10 +4,10 @@ namespace Language
 {
     public class Token
     {
-        private TokenType Type { get; }
-        private object? Literal { get; }
+        public TokenType Type { get; }
+        public object? Literal { get; }
 
-        private int Line { get; }
+        public int Line { get; }
         
 
         public Token(TokenType type, object? literal, int line)
