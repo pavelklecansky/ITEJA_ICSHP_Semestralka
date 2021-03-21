@@ -51,6 +51,7 @@ namespace Language
             this.Controls.Add(this.Canvas);
             this.Name = "DrawingPanel";
             this.Text = "DrawingPanel";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DrawingPanel_FormClosed);
             this.ResumeLayout(false);
         }
 

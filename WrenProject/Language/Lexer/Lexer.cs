@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Language.Lexer
 {
-    public class Lexer
+    internal class Lexer
     {
         private readonly List<Token> Tokens = new();
         private static readonly Dictionary<string, TokenType> Keywords = new();

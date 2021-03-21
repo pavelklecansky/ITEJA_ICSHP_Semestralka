@@ -1,9 +1,10 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Language
 {
-    public partial class DrawingPanel : Form
+    internal partial class DrawingPanel : Form
     {
 
         public Graphics Graphics { get; private set; }
@@ -14,6 +15,10 @@ namespace Language
             InitializeComponent();
             Graphics = Canvas.CreateGraphics();
         }
-        
+
+        private void DrawingPanel_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Turtle.Clear();
+        }
     }
 }

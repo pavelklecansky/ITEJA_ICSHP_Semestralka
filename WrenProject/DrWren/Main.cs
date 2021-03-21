@@ -34,7 +34,7 @@ namespace DrWren
         {
             TextBox.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
             OpenFile.DefaultExt = "wren";
-            OpenFile.Filter = "Wren file (*.wren)|*.wren| Text files (*.txt)|*.txt";
+            OpenFile.Filter = "Wren file (*.wren)|*.wren| Text files (*.txt)|*.txt | All files (*.*)|*.*";
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -61,7 +61,7 @@ namespace DrWren
 
 
             saveFile.DefaultExt = "wren";
-            saveFile.Filter = "Wren file (*.wren)|*.wren| Text files (*.txt)|*.txt";
+            saveFile.Filter = "Wren file (*.wren)|*.wren| Text files (*.txt)|*.txt | All files (*.*)|*.*";
 
             if (saveFile.ShowDialog() == DialogResult.OK &&
                 saveFile.FileName.Length > 0)
@@ -151,6 +151,16 @@ namespace DrWren
             {
                 PrintDocument.Print();
             }
+        }
+
+        private void RunButton_Click(object sender, EventArgs e)
+        {
+            Language.Wren.Run(TextBox.Text);
+        }
+
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Language.Wren.Run(TextBox.Text);
         }
     }
 }

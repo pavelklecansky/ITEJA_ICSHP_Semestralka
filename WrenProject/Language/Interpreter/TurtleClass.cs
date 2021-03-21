@@ -9,7 +9,7 @@ using Language.Parser;
 
 namespace Language
 {
-    public class TurtleClass
+    internal class TurtleClass
     {
         internal class Left : ICallable
         {

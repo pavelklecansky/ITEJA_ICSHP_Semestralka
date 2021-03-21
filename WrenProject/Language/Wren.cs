@@ -1,25 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using Language.Parser;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Language
 {
-    internal class Wren
+    public class Wren
     {
-        private static bool _hadError = false;
-
         static void Main(string[] args)
         {
-            var source = @"
-Turtle.left(90)
-Turtle.forward(100)
-Turtle.right(150)
-Turtle.forward(70)
-Turtle.left(120)
-Turtle.forward(70)
-Turtle.right(150)
-Turtle.forward(100)
-                            Turtle.done()";
+            if (args.Length == 1)
+            {
+                RunFile(args[0]);
+            }
+            else
+            {
+                Console.WriteLine("Usage: wren <script>");
+                Application.Exit();
+            }
+        }
+
+        private static void RunFile(string s)
+        {
+            string text = File.ReadAllText(s);
+            Run(text);
+        }
+
+        public static void Run(string source)
+        {
             var lexer = new Lexer.Lexer(source);
 
 
@@ -29,10 +37,9 @@ Turtle.forward(100)
 
             var inter = new Interpreter(statements);
             inter.Interpret();
-            
         }
 
-        public static void Error(int line, string message)
+        internal static void Error(int line, string message)
         {
             Console.Error.WriteLine($"Line: {line}, Error: {message}");
         }
