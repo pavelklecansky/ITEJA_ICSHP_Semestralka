@@ -47,8 +47,10 @@ namespace Language
 
             DrawGraphics = forms.Graphics;
             forms.Canvas.Paint += CanvasOnPaint;
-            X = forms.ClientSize.Width / 2;
-            Y = forms.ClientSize.Height / 2;
+            forms.Canvas.ClientSizeChanged  += ClientSizeChanged;
+            X = forms.Canvas.ClientSize.Width / 2;
+            Y = forms.Canvas.ClientSize.Height / 2;
+            DrawGraphics.SmoothingMode = SmoothingMode.AntiAlias;
             // TurtleImage = new PictureBox();
             // TurtleImage.Left = (int) Y;
             // TurtleImage.Top = (int) X;
@@ -61,7 +63,6 @@ namespace Language
         {
             foreach (Action func in functions)
             {
-                Thread.Sleep(200);
                 func();
             }
         }
@@ -118,8 +119,17 @@ namespace Language
 
         public static void Clear()
         {
+            functions.Clear();
             forms = new DrawingPanel();
             Init();
+        }
+        
+        private static void ClientSizeChanged(object sender, EventArgs e)
+        {
+            X = forms.Canvas.ClientSize.Width / 2;
+            Y = forms.Canvas.ClientSize.Height / 2;
+            forms.Canvas.Invalidate();
+            
         }
 
         private static void Dispose()
@@ -127,6 +137,7 @@ namespace Language
             if (DrawControl != null)
             {
                 forms.Canvas.Paint -= CanvasOnPaint;
+                forms.Canvas.ClientSizeChanged  -= ClientSizeChanged;
                 DrawPen.Dispose();
                 DrawPen = null;
                 DrawGraphics.Dispose();
@@ -135,5 +146,6 @@ namespace Language
                 DrawControl = null;
             }
         }
+        
     }
 }

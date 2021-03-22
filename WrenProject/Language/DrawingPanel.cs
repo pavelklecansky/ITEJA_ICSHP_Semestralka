@@ -11,7 +11,7 @@ namespace Language
         
         public DrawingPanel()
         {
-            
+           
             InitializeComponent();
             Graphics = Canvas.CreateGraphics();
         }
