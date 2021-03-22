@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Language", "Language\Langua
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrWren", "DrWren\DrWren.csproj", "{FCCADAA0-3455-4CC2-B788-6800F4CAC714}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Language.Tests", "Language.Tests\Language.Tests.csproj", "{076ED376-CD86-480A-97D6-E27067084E10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{FCCADAA0-3455-4CC2-B788-6800F4CAC714}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCCADAA0-3455-4CC2-B788-6800F4CAC714}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCCADAA0-3455-4CC2-B788-6800F4CAC714}.Release|Any CPU.Build.0 = Release|Any CPU
+		{076ED376-CD86-480A-97D6-E27067084E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{076ED376-CD86-480A-97D6-E27067084E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{076ED376-CD86-480A-97D6-E27067084E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{076ED376-CD86-480A-97D6-E27067084E10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

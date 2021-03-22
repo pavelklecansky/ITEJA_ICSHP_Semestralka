@@ -99,12 +99,12 @@ namespace DrWren
 
         private void ChangeTitleName(string name)
         {
-            this.Text = name + " - DrWren";
+            Text = name + " - DrWren";
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -155,12 +155,12 @@ namespace DrWren
 
         private void RunButton_Click(object sender, EventArgs e)
         {
-            Language.Wren.Run(TextBox.Text);
+            Language.Wren.Run(TextBox.Text, new OutputWriter(OutputTextBox));
         }
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Language.Wren.Run(TextBox.Text);
+            Language.Wren.Run(TextBox.Text, new OutputWriter(OutputTextBox));
         }
     }
 }

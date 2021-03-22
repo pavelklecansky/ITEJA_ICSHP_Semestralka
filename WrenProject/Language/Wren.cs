@@ -28,13 +28,18 @@ namespace Language
 
         public static void Run(string source)
         {
+            Run(source,Console.Out);
+        }
+        
+        public static void Run(string source, TextWriter output)
+        {
+            Console.SetOut(output);
             var lexer = new Lexer.Lexer(source);
 
-
             List<Token> tokens = lexer.GetTokens();
-
+        
             var statements = new Parser.Parser(tokens).Parse();
-
+        
             var inter = new Interpreter(statements);
             inter.Interpret();
         }

@@ -153,7 +153,7 @@ namespace Language
                     return -(double) unary.Right.Accept(this);
             }
 
-            throw new ArgumentException("Unexpected expresion.");
+            throw new ArgumentException("Unknown symbol in unary expresion");
         }
 
         public object VisitVar(Var var)
