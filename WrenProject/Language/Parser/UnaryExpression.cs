@@ -2,12 +2,12 @@
 {
     public class UnaryExpression : IExpression
     {
-        public Token Oper { get; }
+        public Token Operator { get; }
         public IExpression Right { get; }
 
-        public UnaryExpression(Token oper, IExpression right)
+        public UnaryExpression(Token @operator, IExpression right)
         {
-            Oper = oper;
+            Operator = @operator;
             Right = right;
         }
 

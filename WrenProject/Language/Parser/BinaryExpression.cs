@@ -3,13 +3,13 @@
     public class BinaryExpression : IExpression
     {
         public IExpression Left { get; }
-        public Token Oper { get; }
+        public Token Operator { get; }
         public IExpression Right { get; }
 
-        public BinaryExpression(IExpression left, Token oper, IExpression right)
+        public BinaryExpression(IExpression left, Token @operator, IExpression right)
         {
             Left = left;
-            Oper = oper;
+            Operator = @operator;
             Right = right;
         }
 

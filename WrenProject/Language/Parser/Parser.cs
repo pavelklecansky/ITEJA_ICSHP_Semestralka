@@ -134,7 +134,7 @@ namespace Language.Parser
 
         private IStatement Call()
         {
-            var className = LookBack();
+            var classToken = LookBack();
             var arguments = new List<IExpression>();
             FindOrError(TokenType.Period, "Expect . after Class");
             if (IsNext(TokenType.Identifier))
@@ -150,7 +150,7 @@ namespace Language.Parser
                 }
 
                 FindOrError(TokenType.RightParen, "Expect ')' after 'if'.");
-                return new CallStmt(className, identifierValue, arguments);
+                return new CallStmt(classToken, identifierValue, arguments);
             }
 
 
