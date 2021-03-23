@@ -134,12 +134,12 @@ namespace Language.Parser
 
         private IStatement Call()
         {
-            var cl = LookBack();
+            var className = LookBack();
             var arguments = new List<IExpression>();
             FindOrError(TokenType.Period, "Expect . after Class");
             if (IsNext(TokenType.Identifier))
             {
-                var identValue = Indentifier();
+                var identifierValue = Indentifier();
                 FindOrError(TokenType.LeftParen, "Expect '(' after 'if'.");
                 if (!Verify(TokenType.RightParen))
                 {
@@ -150,7 +150,7 @@ namespace Language.Parser
                 }
 
                 FindOrError(TokenType.RightParen, "Expect ')' after 'if'.");
-                return new CallStmt(cl, identValue, arguments);
+                return new CallStmt(className, identifierValue, arguments);
             }
 
 
@@ -159,18 +159,18 @@ namespace Language.Parser
 
         private IStatement AssignStatment()
         {
-            var identValue = Indentifier();
+            var identifierName = Indentifier();
             FindOrError(TokenType.Assignment, "Expect '=' after identifier.");
             var expression = ExpOrString();
-            return new AssignStmt(identValue, expression);
+            return new AssignStmt(identifierName, expression);
         }
 
         private IExpression ExpOrString()
         {
             if (IsNext(TokenType.String))
             {
-                var cl = LookBack();
-                return new StringLiteral((string) cl.Literal);
+                var stringLiteral = LookBack();
+                return new StringLiteral((string) stringLiteral.Literal);
             }
 
             return Expression();
@@ -179,13 +179,13 @@ namespace Language.Parser
         private IStatement Var()
         {
             var name = FindOrError(TokenType.Identifier, "Expect '(' after 'if'.");
-            IExpression init = null;
+            IExpression initValue = null;
             if (IsNext(TokenType.Assignment))
             {
-                init = ExpOrString();
+                initValue = ExpOrString();
             }
 
-            return new Var(name.Literal.ToString(), init);
+            return new Var(name.Literal.ToString(), initValue);
         }
 
         private IStatement WhileStatement()
@@ -194,9 +194,9 @@ namespace Language.Parser
             var condition = Expression();
             FindOrError(TokenType.RightParen, "Expect ')' after 'if'.");
             FindOrError(TokenType.LeftBracket, "Expect '{' ");
-            var then = Block();
+            var doBlock = Block();
             FindOrError(TokenType.RightBracket, "Expect '}' ");
-            return new WhileStmt(condition, then);
+            return new WhileStmt(condition, doBlock);
         }
 
         private IStatement IfStatement()
@@ -229,9 +229,9 @@ namespace Language.Parser
 
             while (IsNext(TokenType.Equal, TokenType.NotEqual))
             {
-                var oper = LookBack();
+                var expressionOperator = LookBack();
                 var right = ComparisonExp();
-                expression = new BinaryExpression(expression, oper, right);
+                expression = new BinaryExpression(expression, expressionOperator, right);
             }
 
             return expression;
@@ -242,9 +242,9 @@ namespace Language.Parser
             var expression = Term();
             while (IsNext(TokenType.Less, TokenType.LessEqual, TokenType.Greater, TokenType.GreaterEqual))
             {
-                var oper = LookBack();
+                var expressionOperator = LookBack();
                 var right = Expression();
-                expression = new BinaryExpression(expression, oper, right);
+                expression = new BinaryExpression(expression, expressionOperator, right);
             }
 
             return expression;
@@ -252,37 +252,37 @@ namespace Language.Parser
 
         private IExpression Term()
         {
-            var expr = Factor();
+            var expression = Factor();
             while (IsNext(TokenType.Plus, TokenType.Minus))
             {
-                var oper = LookBack();
+                var expressionOperator = LookBack();
                 var right = Factor();
-                expr = new BinaryExpression(expr, oper, right);
+                expression = new BinaryExpression(expression, expressionOperator, right);
             }
 
-            return expr;
+            return expression;
         }
 
         private IExpression Factor()
         {
-            var expr = Unary();
+            var expression = Unary();
             while (IsNext(TokenType.Star, TokenType.Slash, TokenType.Modulo))
             {
-                var oper = LookBack();
+                var expressionOperator = LookBack();
                 var right = Unary();
-                expr = new BinaryExpression(expr, oper, right);
+                expression = new BinaryExpression(expression, expressionOperator, right);
             }
 
-            return expr;
+            return expression;
         }
 
         private IExpression Unary()
         {
             if (IsNext(TokenType.Plus, TokenType.Minus))
             {
-                var oper = LookBack();
+                var expressionOperator = LookBack();
                 var right = Unary();
-                return new UnaryExpression(oper, right);
+                return new UnaryExpression(expressionOperator, right);
             }
 
             return Primary();
@@ -312,18 +312,18 @@ namespace Language.Parser
 
         private string Indentifier()
         {
-            var indent = LookBack();
-            string identValue;
-            if (indent.Type == TokenType.Identifier)
+            var identifier = LookBack();
+            string identifierValue;
+            if (identifier.Type == TokenType.Identifier)
             {
-                identValue = (string) indent.Literal;
+                identifierValue = (string) identifier.Literal;
             }
             else
             {
                 throw new ArgumentException("Unexpected expresion.");
             }
 
-            return identValue;
+            return identifierValue;
         }
     }
 }
