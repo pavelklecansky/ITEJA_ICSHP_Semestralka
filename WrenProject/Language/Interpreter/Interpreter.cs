@@ -7,10 +7,23 @@ namespace Language
     public class Interpreter : IVisitor
     {
         private Block Block { get; }
+
+        /// <summary>
+        /// Enviroment for native functions of System "class"
+        /// </summary>
         private static readonly Environment SystemEnvironment = new();
+
+        /// <summary>
+        /// Enviroment for native functions of Turtle "class"
+        /// </summary>
         private static readonly Environment Turtle = new(SystemEnvironment);
+
         private Environment _environment = new(Turtle);
 
+
+        /// <summary>
+        /// Define native functions.
+        /// </summary>
         static Interpreter()
         {
             SystemEnvironment.Define("print", new SystemClass.Print());
@@ -52,7 +65,7 @@ namespace Language
                 case TokenType.Turtle when Turtle.Get(identifier) is ICallable function:
                     return function.Call(this, arguments);
                 default:
-                    throw new ArgumentException("Unexpected expresion.");
+                    throw new ArgumentException("Calling method from unknown class.");
             }
         }
 
@@ -108,7 +121,7 @@ namespace Language
                     return (double) binary.Left.Accept(this) % (double) binary.Right.Accept(this);
             }
 
-            throw new ArgumentException("Unexpected expresion.");
+            throw new ArgumentException("Unknown expression operator.");
         }
 
         public object VisitBlock(Block block)
@@ -139,10 +152,10 @@ namespace Language
         {
             switch (unary.Operator.Type)
             {
-                case TokenType.Plus:
-                    return +(double) unary.Right.Accept(this);
                 case TokenType.Minus:
                     return -(double) unary.Right.Accept(this);
+                case TokenType.Plus:
+                    return +(double) unary.Right.Accept(this);
             }
 
             throw new ArgumentException("Unknown symbol in unary expresion");
