@@ -11,16 +11,5 @@
             Type = type;
             Literal = literal;
         }
-
-        public override string ToString()
-        {
-            var token = $"Token {Type}";
-            if (Literal != null)
-            {
-                token += $", value \"{Literal}\"";
-            }
-
-            return token;
-        }
     }
 }

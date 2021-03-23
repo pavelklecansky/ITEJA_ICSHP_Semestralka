@@ -12,6 +12,10 @@ namespace Language.Lexer
         private int _start;
         private int _current;
 
+
+        /// <summary>
+        /// Setup all keywords.
+        /// </summary>
         static Lexer()
         {
             Keywords.Add("var", TokenType.Var);
@@ -41,8 +45,8 @@ namespace Language.Lexer
 
         private void GetToken()
         {
-            var c = GetCharAndAdvance();
-            switch (c)
+            var character = GetCharAndAdvance();
+            switch (character)
             {
                 case '(':
                     AddToken(TokenType.LeftParen);
@@ -81,7 +85,9 @@ namespace Language.Lexer
                     AddToken(TokenType.Period);
                     break;
                 case '!':
-                    AddToken(IsNext('=') ? TokenType.NotEqual : throw new ArgumentException("Bad syntax"));
+                    AddToken(IsNext('=')
+                        ? TokenType.NotEqual
+                        : throw new ArgumentException("Bad syntax: After ! must by ="));
                     break;
                 case '=':
                     AddToken(IsNext('=') ? TokenType.Equal : TokenType.Assignment);
@@ -102,11 +108,11 @@ namespace Language.Lexer
                     ReadString();
                     break;
                 default:
-                    if (char.IsNumber(c))
+                    if (char.IsNumber(character))
                     {
                         ReadNumber();
                     }
-                    else if (char.IsLetter(c))
+                    else if (char.IsLetter(character))
                     {
                         Identifier();
                     }
@@ -192,11 +198,8 @@ namespace Language.Lexer
         private bool IsNext(char expected)
         {
             if (End()) return false;
-            if (_source[_current] != expected)
-            {
-                return false;
-            }
-
+            if (_source[_current] != expected) return false;
+            
             _current++;
             return true;
         }
