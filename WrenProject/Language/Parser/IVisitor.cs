@@ -4,11 +4,11 @@ namespace Language.Parser
 {
     public interface IVisitor
     {
-        object VisitAssignStmt(AssignStmt assignStmt);
+        object VisitAssignStmt(AssignStatement assignStatement);
 
-        object VisitCallStmt(CallStmt callStmt);
-        object VisitIfStmt(IfStmt ifStmt);
-        object VisitWhileStmt(WhileStmt whileStmt);
+        object VisitCallStmt(CallStatement callStatement);
+        object VisitIfStmt(IfStatement ifStatement);
+        object VisitWhileStmt(WhileStatement whileStatement);
         object VisitBinaryExpr(BinaryExpression binary);
         object VisitBlock(Block block);
         object VisitNumber(Number number);

@@ -1,11 +1,11 @@
 ﻿namespace Language.Parser.Statement
 {
-    public class WhileStmt : IStatement
+    public class WhileStatement : IStatement
     {
         public IExpression Condition { get; }
         public Block Do { get; }
 
-        public WhileStmt(IExpression condition, Block doStatement)
+        public WhileStatement(IExpression condition, Block doStatement)
         {
             Condition = condition;
             Do = doStatement;

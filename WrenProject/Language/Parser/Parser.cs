@@ -150,7 +150,7 @@ namespace Language.Parser
                 }
 
                 FindOrError(TokenType.RightParen, "Expect ')' after 'if'.");
-                return new CallStmt(classToken, identifierValue, arguments);
+                return new CallStatement(classToken, identifierValue, arguments);
             }
 
 
@@ -162,7 +162,7 @@ namespace Language.Parser
             var identifierName = Indentifier();
             FindOrError(TokenType.Assignment, "Expect '=' after identifier.");
             var expression = ExpOrString();
-            return new AssignStmt(identifierName, expression);
+            return new AssignStatement(identifierName, expression);
         }
 
         private IExpression ExpOrString()
@@ -196,7 +196,7 @@ namespace Language.Parser
             FindOrError(TokenType.LeftBracket, "Expect '{' ");
             var doBlock = Block();
             FindOrError(TokenType.RightBracket, "Expect '}' ");
-            return new WhileStmt(condition, doBlock);
+            return new WhileStatement(condition, doBlock);
         }
 
         private IStatement IfStatement()
@@ -215,7 +215,7 @@ namespace Language.Parser
                 FindOrError(TokenType.RightBracket, "Expect '}' ");
             }
 
-            return new IfStmt(condition, then, elseB);
+            return new IfStatement(condition, then, elseB);
         }
 
         private IExpression Expression()

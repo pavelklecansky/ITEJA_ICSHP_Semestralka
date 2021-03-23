@@ -3,13 +3,13 @@ using Language.Parser.Statement;
 
 namespace Language.Parser
 {
-    public class CallStmt : IStatement
+    public class CallStatement : IStatement
     {
         public Token Class { get; }
         public string Name { get; }
         public List<IExpression> Arguments { get; }
 
-        public CallStmt(Token @class, string name, List<IExpression> arguments)
+        public CallStatement(Token @class, string name, List<IExpression> arguments)
         {
             Class = @class;
             Name = name;

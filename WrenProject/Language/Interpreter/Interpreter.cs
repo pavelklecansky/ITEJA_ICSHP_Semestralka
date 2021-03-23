@@ -31,19 +31,19 @@ namespace Language
             Block.Accept(this);
         }
 
-        public object VisitAssignStmt(AssignStmt assignStmt)
+        public object VisitAssignStmt(AssignStatement assignStatement)
         {
-            var value = assignStmt.Value.Accept(this);
-            _environment.Assign(assignStmt.Name, value);
+            var value = assignStatement.Value.Accept(this);
+            _environment.Assign(assignStatement.Name, value);
             return value;
         }
 
-        public object VisitCallStmt(CallStmt callStmt)
+        public object VisitCallStmt(CallStatement callStatement)
         {
-            var callClass = callStmt.Class;
-            var identifier = callStmt.Name;
+            var callClass = callStatement.Class;
+            var identifier = callStatement.Name;
 
-            var arguments = callStmt.Arguments;
+            var arguments = callStatement.Arguments;
 
             switch (callClass.Type)
             {
@@ -56,25 +56,25 @@ namespace Language
             }
         }
 
-        public object VisitIfStmt(IfStmt ifStmt)
+        public object VisitIfStmt(IfStatement ifStatement)
         {
-            if ((bool) ifStmt.Condition.Accept(this))
+            if ((bool) ifStatement.Condition.Accept(this))
             {
-                ifStmt.Then.Accept(this);
+                ifStatement.Then.Accept(this);
             }
             else
             {
-                ifStmt.Else.Accept(this);
+                ifStatement.Else.Accept(this);
             }
 
             return null;
         }
 
-        public object VisitWhileStmt(WhileStmt whileStmt)
+        public object VisitWhileStmt(WhileStatement whileStatement)
         {
-            while ((bool) whileStmt.Condition.Accept(this))
+            while ((bool) whileStatement.Condition.Accept(this))
             {
-                whileStmt.Do.Accept(this);
+                whileStatement.Do.Accept(this);
             }
 
             return null;
@@ -82,7 +82,7 @@ namespace Language
 
         public object VisitBinaryExpr(BinaryExpression binary)
         {
-            switch (binary.Oper.Type)
+            switch (binary.Operator.Type)
             {
                 case TokenType.Plus:
                     return (double) binary.Left.Accept(this) + (double) binary.Right.Accept(this);
@@ -137,7 +137,7 @@ namespace Language
 
         public object VisitUnaryExpression(UnaryExpression unary)
         {
-            switch (unary.Oper.Type)
+            switch (unary.Operator.Type)
             {
                 case TokenType.Plus:
                     return +(double) unary.Right.Accept(this);
