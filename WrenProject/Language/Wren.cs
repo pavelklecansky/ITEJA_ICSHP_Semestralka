@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
 namespace Language
 {
-    public class Wren
+    public static class Wren
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             if (args.Length == 1)
             {
@@ -22,31 +21,24 @@ namespace Language
 
         private static void RunFile(string s)
         {
-            string text = File.ReadAllText(s);
+            var text = File.ReadAllText(s);
             Run(text);
         }
 
         public static void Run(string source)
         {
-            Run(source,Console.Out);
+            Run(source, Console.Out);
         }
-        
+
         public static void Run(string source, TextWriter output)
         {
             Console.SetOut(output);
             var lexer = new Lexer.Lexer(source);
 
-            List<Token> tokens = lexer.GetTokens();
-        
-            var statements = new Parser.Parser(tokens).Parse();
-        
-            var inter = new Interpreter(statements);
-            inter.Interpret();
-        }
+            var parser = new Parser.Parser(lexer.GetTokens());
 
-        internal static void Error(int line, string message)
-        {
-            Console.Error.WriteLine($"Line: {line}, Error: {message}");
+            var interpreter = new Interpreter(parser.Parse());
+            interpreter.Interpret();
         }
     }
 }

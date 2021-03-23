@@ -7,13 +7,13 @@
 
         public Var(string name, IExpression value)
         {
-            this.Name = name;
-            this.Value = value;
+            Name = name;
+            Value = value;
         }
 
-        public object Accept(IVisiter visiter)
+        public object Accept(IVisitor visitor)
         {
-            return visiter.VisitVar(this);
+            return visitor.VisitVar(this);
         }
     }
 }

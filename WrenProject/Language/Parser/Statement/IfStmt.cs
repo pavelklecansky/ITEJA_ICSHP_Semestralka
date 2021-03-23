@@ -14,9 +14,9 @@
             Else = @else;
         }
         
-        public object Accept(IVisiter visiter)
+        public object Accept(IVisitor visitor)
         {
-            return visiter.VisitIfStmt(this);
+            return visitor.VisitIfStmt(this);
         }
         
     }

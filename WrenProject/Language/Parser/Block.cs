@@ -12,9 +12,9 @@ namespace Language.Parser
             Statements = statements;
         }
 
-        public object Accept(IVisiter visiter)
+        public object Accept(IVisitor visitor)
         {
-            return visiter.VisitBlock(this);
+            return visitor.VisitBlock(this);
         }
     }
 }

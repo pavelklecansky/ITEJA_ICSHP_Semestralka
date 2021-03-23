@@ -11,9 +11,9 @@
             Value = value;
         }
 
-        public object Accept(IVisiter visiter)
+        public object Accept(IVisitor visitor)
         {
-            return visiter.VisitAssignStmt(this);
+            return visitor.VisitAssignStmt(this);
         }
     }
 }

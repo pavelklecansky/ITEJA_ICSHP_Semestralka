@@ -11,9 +11,9 @@
             Right = right;
         }
 
-        public object Accept(IVisiter visiter)
+        public object Accept(IVisitor visitor)
         {
-            return visiter.VisitUnaryExpression(this);
+            return visitor.VisitUnaryExpression(this);
         }
     }
 }

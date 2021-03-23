@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
@@ -6,21 +7,21 @@ namespace DrWren
 {
     public class OutputWriter : TextWriter
     {
-        private RichTextBox output;
+        private readonly RichTextBox _output;
 
         public OutputWriter(RichTextBox output)
         {
-            this.output = output;
+            _output = output;
         }
 
         public override void WriteLine(char value)
         {
-            output.Text += value + "\n";
+            _output.Text += value + NewLine;
         }
 
         public override void WriteLine(string value)
         {
-            output.Text += value + "\n";
+            _output.Text += value + NewLine;
         }
 
         public override Encoding Encoding { get; }

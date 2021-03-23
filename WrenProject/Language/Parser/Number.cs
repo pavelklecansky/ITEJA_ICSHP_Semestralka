@@ -10,9 +10,9 @@
         }
 
 
-        public object Accept(IVisiter visiter)
+        public object Accept(IVisitor visitor)
         {
-            return visiter.VisitNumber(this);
+            return visitor.VisitNumber(this);
         }
         
         public static explicit operator double(Number number)

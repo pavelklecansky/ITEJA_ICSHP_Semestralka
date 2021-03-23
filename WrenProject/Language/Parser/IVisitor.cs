@@ -2,7 +2,7 @@
 
 namespace Language.Parser
 {
-    public interface IVisiter
+    public interface IVisitor
     {
         object VisitAssignStmt(AssignStmt assignStmt);
 

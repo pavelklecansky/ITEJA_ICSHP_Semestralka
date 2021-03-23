@@ -11,9 +11,9 @@
             Do = doStatement;
         }
 
-        public object Accept(IVisiter visiter)
+        public object Accept(IVisitor visitor)
         {
-            return visiter.VisitWhileStmt(this);
+            return visitor.VisitWhileStmt(this);
         }
     }
 }

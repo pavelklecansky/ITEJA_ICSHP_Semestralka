@@ -9,9 +9,9 @@
             Name = name;
         }
 
-        public object Accept(IVisiter visiter)
+        public object Accept(IVisitor visitor)
         {
-            return visiter.VisitVariable(this);
+            return visitor.VisitVariable(this);
         }
     }
 }

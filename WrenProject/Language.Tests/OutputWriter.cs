@@ -5,21 +5,21 @@ namespace Language.Tests
 {
     public class OutputWriter : TextWriter
     {
-        public string output;
+        public string Output;
 
         public OutputWriter(string output)
         {
-            this.output = output;
+            Output = output;
         }
 
         public override void WriteLine(char value)
         {
-            output += value + "\n";
+            Output += value + "\n";
         }
 
         public override void WriteLine(string value)
         {
-            output += value + "\n";
+            Output += value + "\n";
         }
 
         public override Encoding Encoding { get; }

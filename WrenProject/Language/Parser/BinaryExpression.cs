@@ -13,9 +13,9 @@
             Right = right;
         }
 
-        public object Accept(IVisiter visiter)
+        public object Accept(IVisitor visitor)
         {
-            return visiter.VisitBinaryExpr(this);
+            return visitor.VisitBinaryExpr(this);
         }
     }
 }

@@ -5,7 +5,6 @@ namespace Language.Parser
 {
     public class CallStmt : IStatement
     {
-
         public Token Class { get; }
         public string Name { get; }
         public List<IExpression> Arguments { get; }
@@ -17,9 +16,9 @@ namespace Language.Parser
             Arguments = arguments;
         }
 
-        public object Accept(IVisiter visiter)
+        public object Accept(IVisitor visitor)
         {
-            return visiter.VisitCallStmt(this);
+            return visitor.VisitCallStmt(this);
         }
     }
 }

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Threading;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 using Language.Parser;
 
 
 namespace Language
 {
-    internal class TurtleClass
+    internal abstract class TurtleClass
     {
         internal class Left : ICallable
         {
@@ -33,13 +28,14 @@ namespace Language
         {
             public object Call(Interpreter interpreter, List<IExpression> arguments)
             {
-                if (arguments.Count == 0)
+                switch (arguments.Count)
                 {
-                    Turtle.Forward();
-                }
-                else if (arguments.Count == 1)
-                {
-                    Turtle.Forward((double) arguments[0].Accept(interpreter));
+                    case 0:
+                        Turtle.Forward();
+                        break;
+                    case 1:
+                        Turtle.Forward((double) arguments[0].Accept(interpreter));
+                        break;
                 }
 
                 return null;

@@ -2,6 +2,6 @@
 {
     public interface IElement
     {
-       object Accept(IVisiter visiter);
+       object Accept(IVisitor visitor);
     }
 }

@@ -14,7 +14,7 @@ namespace Language.Tests
 
             Wren.Run(source, output);
 
-            Assert.Equal("15\n", output.output);
+            Assert.Equal("15\n", output.Output);
         }
 
         [Fact]
@@ -26,7 +26,7 @@ namespace Language.Tests
 
             Wren.Run(source, output);
 
-            Assert.Equal("Test\n", output.output);
+            Assert.Equal("Test\n", output.Output);
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace Language.Tests
 
             Wren.Run(source, output);
 
-            Assert.Equal("1200\n", output.output);
+            Assert.Equal("1200\n", output.Output);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace Language.Tests
             Wren.Run(source, output);
 
 
-            Assert.Equal("1\n", output.output);
+            Assert.Equal("1\n", output.Output);
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace Language.Tests
 
             Wren.Run(source, output);
 
-            Assert.Equal("0\n", output.output);
+            Assert.Equal("0\n", output.Output);
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace Language.Tests
 
             Wren.Run(source, output);
 
-            Assert.Equal("20\n", output.output);
+            Assert.Equal("20\n", output.Output);
         }
 
 
@@ -88,7 +88,7 @@ namespace Language.Tests
 
             Wren.Run(source, output);
 
-            Assert.Equal("-24\n", output.output);
+            Assert.Equal("-24\n", output.Output);
         }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace Language.Tests
 
             Wren.Run(source, output);
 
-            Assert.Equal("26\n", output.output);
+            Assert.Equal("26\n", output.Output);
         }
 
         [Fact]
@@ -121,7 +121,7 @@ namespace Language.Tests
             var source = @"var test = 15
                            System.print(test)";
             Wren.Run(source, output);
-            Assert.Equal("15\n", output.output);
+            Assert.Equal("15\n", output.Output);
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace Language.Tests
             var source = @"var test = ""Pes""
                            System.print(test)";
             Wren.Run(source, output);
-            Assert.Equal("Pes\n", output.output);
+            Assert.Equal("Pes\n", output.Output);
         }
 
         [Fact]
@@ -154,7 +154,7 @@ namespace Language.Tests
             var source = @"if(5>10){System.print(1)}else{System.print(0)}";
 
             Wren.Run(source, output);
-            Assert.Equal("0\n", output.output);
+            Assert.Equal("0\n", output.Output);
         }
         
         [Fact]
@@ -165,7 +165,7 @@ namespace Language.Tests
             var source = @"if(15>10){System.print(1)}else{System.print(0)}";
 
             Wren.Run(source, output);
-            Assert.Equal("1\n", output.output);
+            Assert.Equal("1\n", output.Output);
         }
         
         [Fact]
@@ -176,7 +176,7 @@ namespace Language.Tests
             var source = @"if(10>=10){System.print(1)}else{System.print(0)}";
 
             Wren.Run(source, output);
-            Assert.Equal("1\n", output.output);
+            Assert.Equal("1\n", output.Output);
         }
         
          
@@ -188,7 +188,7 @@ namespace Language.Tests
             var source = @"if(10<=10){System.print(1)}else{System.print(0)}";
 
             Wren.Run(source, output);
-            Assert.Equal("1\n", output.output);
+            Assert.Equal("1\n", output.Output);
         }
         
         [Fact]
@@ -199,7 +199,7 @@ namespace Language.Tests
             var source = @"if(10==10){System.print(1)}else{System.print(0)}";
 
             Wren.Run(source, output);
-            Assert.Equal("1\n", output.output);
+            Assert.Equal("1\n", output.Output);
         }
         
         [Fact]
@@ -210,7 +210,7 @@ namespace Language.Tests
             var source = @"if(10!=10){System.print(1)}else{System.print(0)}";
 
             Wren.Run(source, output);
-            Assert.Equal("0\n", output.output);
+            Assert.Equal("0\n", output.Output);
         }
         
         [Fact]
@@ -221,7 +221,7 @@ namespace Language.Tests
             var source = @"if(10 < 10){System.print(1)}else{System.print(0)}";
 
             Wren.Run(source, output);
-            Assert.Equal("0\n", output.output);
+            Assert.Equal("0\n", output.Output);
         }
         
         
@@ -237,7 +237,7 @@ namespace Language.Tests
                            }";
 
             Wren.Run(source, output);
-            Assert.Equal("5\n6\n7\n8\n9\n", output.output);
+            Assert.Equal("5\n6\n7\n8\n9\n", output.Output);
         }
     }
 }

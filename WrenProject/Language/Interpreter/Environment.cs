@@ -5,30 +5,30 @@ namespace Language
 {
     internal class Environment
     {
-        private Environment parentEnviroment;
-        private Dictionary<string, object> values = new();
+        private readonly Environment parentEnvironment;
+        private readonly Dictionary<string, object> values = new();
 
 
         public Environment()
         {
-            parentEnviroment = null;
+            parentEnvironment = null;
         }
 
-        public Environment(Environment parentEnviroment)
+        public Environment(Environment parentEnvironment)
         {
-            this.parentEnviroment = parentEnviroment;
+            this.parentEnvironment = parentEnvironment;
         }
 
         public object Get(string name)
         {
-            if (values.TryGetValue(name,out object value))
+            if (values.TryGetValue(name,out var value))
             {
                 return value;
             }
 
-            if (parentEnviroment != null)
+            if (parentEnvironment != null)
             {
-                return parentEnviroment.Get(name);
+                return parentEnvironment.Get(name);
             }
 
             throw new ArgumentException("Variable don't exists");
@@ -47,9 +47,9 @@ namespace Language
                 return;
             }
             
-            if (parentEnviroment != null)
+            if (parentEnvironment != null)
             {
-                parentEnviroment.Assign(name,value);
+                parentEnvironment.Assign(name,value);
                 return;
             }
             

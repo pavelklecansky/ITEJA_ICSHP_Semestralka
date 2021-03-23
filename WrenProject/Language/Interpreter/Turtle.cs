@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Language
@@ -13,18 +12,18 @@ namespace Language
         private static Graphics DrawGraphics { get; set; }
         private static Pen DrawPen { get; set; }
 
-        private static PictureBox TurtleImage { get; set; }
+       // private static PictureBox TurtleImage { get; set; }
 
-        private static DrawingPanel forms;
+        private static DrawingPanel Forms { get; set; }
 
         private static float X { get; set; }
         private static float Y { get; set; }
 
         private static int PenWidth { get; set; }
 
-        public static double Direction { get; set; }
+        private static double Direction { get; set; }
 
-        static List<Action> functions = new();
+        private static readonly List<Action> Functions = new();
 
 
         static Turtle()
@@ -32,24 +31,21 @@ namespace Language
             Clear();
         }
 
-        static void Init()
+        private static void Init()
         {
             Dispose();
             Direction = 0;
             PenWidth = 4;
 
-            DrawControl = forms;
+            DrawControl = Forms;
 
-            DrawPen = new Pen(Color.Black, PenWidth);
-            DrawPen.StartCap = LineCap.Round;
-            DrawPen.EndCap = LineCap.Round;
-
-
-            DrawGraphics = forms.Graphics;
-            forms.Canvas.Paint += CanvasOnPaint;
-            forms.Canvas.ClientSizeChanged  += ClientSizeChanged;
-            X = forms.Canvas.ClientSize.Width / 2;
-            Y = forms.Canvas.ClientSize.Height / 2;
+            DrawPen = new Pen(Color.Black, PenWidth) {StartCap = LineCap.Round, EndCap = LineCap.Round};
+            
+            DrawGraphics = Forms.Graphics;
+            Forms.Canvas.Paint += CanvasOnPaint;
+            Forms.Canvas.ClientSizeChanged += ClientSizeChanged;
+            X = Forms.Canvas.ClientSize.Width / 2;
+            Y = Forms.Canvas.ClientSize.Height / 2;
             DrawGraphics.SmoothingMode = SmoothingMode.AntiAlias;
             // TurtleImage = new PictureBox();
             // TurtleImage.Left = (int) Y;
@@ -61,7 +57,7 @@ namespace Language
 
         private static void CanvasOnPaint(object sender, PaintEventArgs e)
         {
-            foreach (Action func in functions)
+            foreach (var func in Functions)
             {
                 func();
             }
@@ -69,17 +65,17 @@ namespace Language
 
         public static void Forward()
         {
-            functions.Add(() => Forward(1));
+            Functions.Add(() => Forward(1));
         }
 
         public static void Forward(double steps)
         {
-            functions.Add(() => DrawLine(steps));
+            Functions.Add(() => DrawLine(steps));
         }
 
         public static void Right(double degrees)
         {
-            functions.Add(() => Direction += degrees);
+            Functions.Add(() => Direction += degrees);
         }
 
         public static void Left(double degrees)
@@ -88,7 +84,7 @@ namespace Language
         }
 
 
-        public static void DrawLine(double steps)
+        private static void DrawLine(double steps)
         {
             var radians = Direction * (Math.PI / 180);
             var oldX = X;
@@ -100,44 +96,43 @@ namespace Language
             // DrawTurtle();
         }
 
-        private static void DrawTurtle()
-        {
-            var turtleImg = new Bitmap(@"E:\Programovany\ITEJA_ICSHP_Semestralka\WrenProject\Language\turtle.png");
-            var turtleImgSize = Math.Max(turtleImg.Width, turtleImg.Height);
-            TurtleImage.BackgroundImage = turtleImg;
-            TurtleImage.Width = turtleImg.Width;
-            TurtleImage.Height = turtleImg.Height;
-
-            TurtleImage.Left = 100;
-            TurtleImage.Top = 100;
-        }
+        // private static void DrawTurtle()
+        // {
+        //     var turtleImg = new Bitmap(@"E:\Programovany\ITEJA_ICSHP_Semestralka\WrenProject\Language\turtle.png");
+        //     var turtleImgSize = Math.Max(turtleImg.Width, turtleImg.Height);
+        //     TurtleImage.BackgroundImage = turtleImg;
+        //     TurtleImage.Width = turtleImg.Width;
+        //     TurtleImage.Height = turtleImg.Height;
+        //
+        //     TurtleImage.Left = 100;
+        //     TurtleImage.Top = 100;
+        // }
 
         public static void Done()
         {
-            forms.ShowDialog();
+            Forms.ShowDialog();
         }
 
         public static void Clear()
         {
-            functions.Clear();
-            forms = new DrawingPanel();
+            Functions.Clear();
+            Forms = new DrawingPanel();
             Init();
         }
-        
+
         private static void ClientSizeChanged(object sender, EventArgs e)
         {
-            X = forms.Canvas.ClientSize.Width / 2;
-            Y = forms.Canvas.ClientSize.Height / 2;
-            forms.Canvas.Invalidate();
-            
+            X = Forms.Canvas.ClientSize.Width / 2;
+            Y = Forms.Canvas.ClientSize.Height / 2;
+            Forms.Canvas.Invalidate();
         }
 
         private static void Dispose()
         {
             if (DrawControl != null)
             {
-                forms.Canvas.Paint -= CanvasOnPaint;
-                forms.Canvas.ClientSizeChanged  -= ClientSizeChanged;
+                Forms.Canvas.Paint -= CanvasOnPaint;
+                Forms.Canvas.ClientSizeChanged -= ClientSizeChanged;
                 DrawPen.Dispose();
                 DrawPen = null;
                 DrawGraphics.Dispose();
@@ -146,6 +141,5 @@ namespace Language
                 DrawControl = null;
             }
         }
-        
     }
 }

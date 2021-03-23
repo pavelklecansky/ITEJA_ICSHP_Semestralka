@@ -4,7 +4,7 @@ using Language.Parser;
 
 namespace Language
 {
-    class SystemClass
+    internal abstract class SystemClass
     {
         internal class Print : ICallable
         {

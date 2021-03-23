@@ -5,13 +5,12 @@ namespace Language.Lexer
 {
     internal class Lexer
     {
-        private readonly List<Token> Tokens = new();
+        private readonly List<Token> _tokens = new();
         private static readonly Dictionary<string, TokenType> Keywords = new();
 
         private readonly string _source;
-        private int _start = 0;
-        private int _current = 0;
-        private int _line = 1;
+        private int _start;
+        private int _current;
 
         static Lexer()
         {
@@ -36,13 +35,13 @@ namespace Language.Lexer
                 GetToken();
             }
 
-            Tokens.Add(new Token(TokenType.Eof, null, _line));
-            return Tokens;
+            _tokens.Add(new Token(TokenType.Eof, null));
+            return _tokens;
         }
 
         private void GetToken()
         {
-            char c = GetCharAndAdvance();
+            var c = GetCharAndAdvance();
             switch (c)
             {
                 case '(':
@@ -98,7 +97,6 @@ namespace Language.Lexer
                 case '\t':
                     break;
                 case '\n':
-                    _line++;
                     break;
                 case '"':
                     ReadString();
@@ -114,7 +112,7 @@ namespace Language.Lexer
                     }
                     else
                     {
-                        Wren.Error(_line, "Unexpected character.");
+                        throw new ArgumentException("Unexpected character.");
                     }
 
                     break;
@@ -125,23 +123,17 @@ namespace Language.Lexer
         {
             while (LookAhead() != '"' && !End())
             {
-                if (LookAhead() == '\n')
-                {
-                    _line++;
-                }
-
                 GetCharAndAdvance();
             }
 
             if (End())
             {
-                Wren.Error(_line, "Unterminated string.");
-                return;
+                throw new ArgumentException("Unterminated string.");
             }
 
             GetCharAndAdvance();
 
-            string value = _source.Substring(_start + 1, _current - _start - 2);
+            var value = _source.Substring(_start + 1, _current - _start - 2);
             AddToken(TokenType.String, value);
         }
 
@@ -152,7 +144,7 @@ namespace Language.Lexer
                 GetCharAndAdvance();
             }
 
-            string text = _source.Substring(_start, _current - _start);
+            var text = _source.Substring(_start, _current - _start);
             if (Keywords.TryGetValue(text, out var type))
             {
                 AddToken(type);
@@ -209,14 +201,9 @@ namespace Language.Lexer
             return true;
         }
 
-        private void AddToken(TokenType type)
+        private void AddToken(TokenType type, object literal = null)
         {
-            AddToken(type, null);
-        }
-
-        private void AddToken(TokenType type, object? literal)
-        {
-            Tokens.Add(new Token(type, literal, _line));
+            _tokens.Add(new Token(type, literal));
         }
 
         private char GetCharAndAdvance()

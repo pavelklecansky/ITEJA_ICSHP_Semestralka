@@ -1,23 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DrWren
 {
     public partial class Main : Form
     {
-        public string FileName { get; set; }
+        private string FileName { get; set; }
 
         public Main()
         {
             InitializeComponent();
-            ChangeTitleName("Unititled");
+            ChangeTitleName("Untitled");
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -34,7 +28,7 @@ namespace DrWren
         {
             TextBox.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
             OpenFile.DefaultExt = "wren";
-            OpenFile.Filter = "Wren file (*.wren)|*.wren| Text files (*.txt)|*.txt | All files (*.*)|*.*";
+            OpenFile.Filter = @"Wren file (*.wren)|*.wren| Text files (*.txt)|*.txt | All files (*.*)|*.*";
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -57,11 +51,12 @@ namespace DrWren
 
         private void SaveFile()
         {
-            SaveFileDialog saveFile = new SaveFileDialog();
+            var saveFile = new SaveFileDialog
+            {
+                DefaultExt = "wren",
+                Filter = @"Wren file (*.wren)|*.wren| Text files (*.txt)|*.txt | All files (*.*)|*.*"
+            };
 
-
-            saveFile.DefaultExt = "wren";
-            saveFile.Filter = "Wren file (*.wren)|*.wren| Text files (*.txt)|*.txt | All files (*.*)|*.*";
 
             if (saveFile.ShowDialog() == DialogResult.OK &&
                 saveFile.FileName.Length > 0)
@@ -76,7 +71,7 @@ namespace DrWren
         {
             if (TextBox.Text != "")
             {
-                var result = MessageBox.Show("Would you like to save your changes?", "Save changes",
+                var result = MessageBox.Show(@"Would you like to save your changes?", @"Save changes",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
@@ -99,7 +94,7 @@ namespace DrWren
 
         private void ChangeTitleName(string name)
         {
-            Text = name + " - DrWren";
+            Text = name + @" - DrWren";
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -145,8 +140,7 @@ namespace DrWren
 
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PrintDialog printDialog = new PrintDialog();
-            printDialog.Document = PrintDocument;
+            var printDialog = new PrintDialog {Document = PrintDocument};
             if (printDialog.ShowDialog() == DialogResult.OK)
             {
                 PrintDocument.Print();

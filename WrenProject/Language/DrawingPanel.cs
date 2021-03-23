@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace Language
@@ -7,7 +6,7 @@ namespace Language
     internal partial class DrawingPanel : Form
     {
 
-        public Graphics Graphics { get; private set; }
+        public Graphics Graphics { get; }
         
         public DrawingPanel()
         {

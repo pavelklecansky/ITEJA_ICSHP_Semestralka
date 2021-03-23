@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq.Expressions;
-using System.Runtime.InteropServices;
+using System.Linq;
 using Language.Parser.Statement;
 
 namespace Language.Parser
 {
     public class Parser
     {
-        private readonly List<Token> tokens;
+        private readonly List<Token> _tokens;
 
-        private int current;
+        private int _current;
 
         public Parser(List<Token> tokens)
         {
-            this.tokens = tokens;
+            _tokens = tokens;
         }
 
         public Block Parse()
@@ -25,13 +23,10 @@ namespace Language.Parser
 
         private bool IsNext(params TokenType[] types)
         {
-            foreach (var type in types)
+            if (types.Any(Verify))
             {
-                if (Verify(type))
-                {
-                    GetTokenAndAdvance();
-                    return true;
-                }
+                GetTokenAndAdvance();
+                return true;
             }
 
             return false;
@@ -49,7 +44,7 @@ namespace Language.Parser
 
         private Token LookAhead()
         {
-            return tokens[current];
+            return _tokens[_current];
         }
 
         private bool End()
@@ -59,12 +54,12 @@ namespace Language.Parser
 
         private Token LookBack()
         {
-            return tokens[current - 1];
+            return _tokens[_current - 1];
         }
 
         private Token GetTokenAndAdvance()
         {
-            if (!End()) current++;
+            if (!End()) _current++;
             return LookBack();
         }
 
@@ -80,7 +75,7 @@ namespace Language.Parser
 
         private Block Program()
         {
-            Block block = Block();
+            var block = Block();
 
             if (!End())
             {
@@ -92,14 +87,14 @@ namespace Language.Parser
 
         private Block Block()
         {
-            List<IStatement> statements = Statements();
+            var statements = Statements();
             return new Block(statements);
         }
 
         private List<IStatement> Statements()
         {
             var statements = new List<IStatement>();
-            while (!End() && tokens[current].Type != TokenType.RightBracket)
+            while (!End() && _tokens[_current].Type != TokenType.RightBracket)
             {
                 statements.Add(Statement());
             }
@@ -139,8 +134,8 @@ namespace Language.Parser
 
         private IStatement Call()
         {
-            Token cl = LookBack();
-            List<IExpression> arguments = new List<IExpression>();
+            var cl = LookBack();
+            var arguments = new List<IExpression>();
             FindOrError(TokenType.Period, "Expect . after Class");
             if (IsNext(TokenType.Identifier))
             {
@@ -166,7 +161,7 @@ namespace Language.Parser
         {
             var identValue = Indentifier();
             FindOrError(TokenType.Assignment, "Expect '=' after identifier.");
-            IExpression expression = ExpOrString();
+            var expression = ExpOrString();
             return new AssignStmt(identValue, expression);
         }
 
@@ -174,7 +169,7 @@ namespace Language.Parser
         {
             if (IsNext(TokenType.String))
             {
-                Token cl = LookBack();
+                var cl = LookBack();
                 return new StringLiteral((string) cl.Literal);
             }
 
@@ -196,10 +191,10 @@ namespace Language.Parser
         private IStatement WhileStatement()
         {
             FindOrError(TokenType.LeftParen, "Expect '(' after 'if'.");
-            IExpression condition = Expression();
+            var condition = Expression();
             FindOrError(TokenType.RightParen, "Expect ')' after 'if'.");
             FindOrError(TokenType.LeftBracket, "Expect '{' ");
-            Block then = Block();
+            var then = Block();
             FindOrError(TokenType.RightBracket, "Expect '}' ");
             return new WhileStmt(condition, then);
         }
@@ -207,10 +202,10 @@ namespace Language.Parser
         private IStatement IfStatement()
         {
             FindOrError(TokenType.LeftParen, "Expect '(' after 'if'.");
-            IExpression condition = Expression();
+            var condition = Expression();
             FindOrError(TokenType.RightParen, "Expect ')' after 'if'.");
             FindOrError(TokenType.LeftBracket, "Expect '{' ");
-            Block then = Block();
+            var then = Block();
             FindOrError(TokenType.RightBracket, "Expect '}' ");
             Block elseB = null;
             if (IsNext(TokenType.Else))
@@ -230,12 +225,12 @@ namespace Language.Parser
 
         private IExpression Equality()
         {
-            IExpression expression = ComparisonExp();
+            var expression = ComparisonExp();
 
             while (IsNext(TokenType.Equal, TokenType.NotEqual))
             {
-                Token oper = LookBack();
-                IExpression right = ComparisonExp();
+                var oper = LookBack();
+                var right = ComparisonExp();
                 expression = new BinaryExpression(expression, oper, right);
             }
 
@@ -244,11 +239,11 @@ namespace Language.Parser
 
         private IExpression ComparisonExp()
         {
-            IExpression expression = Term();
+            var expression = Term();
             while (IsNext(TokenType.Less, TokenType.LessEqual, TokenType.Greater, TokenType.GreaterEqual))
             {
-                Token oper = LookBack();
-                IExpression right = Expression();
+                var oper = LookBack();
+                var right = Expression();
                 expression = new BinaryExpression(expression, oper, right);
             }
 
@@ -257,11 +252,11 @@ namespace Language.Parser
 
         private IExpression Term()
         {
-            IExpression expr = Factor();
+            var expr = Factor();
             while (IsNext(TokenType.Plus, TokenType.Minus))
             {
-                Token oper = LookBack();
-                IExpression right = Factor();
+                var oper = LookBack();
+                var right = Factor();
                 expr = new BinaryExpression(expr, oper, right);
             }
 
@@ -270,11 +265,11 @@ namespace Language.Parser
 
         private IExpression Factor()
         {
-            IExpression expr = Unary();
+            var expr = Unary();
             while (IsNext(TokenType.Star, TokenType.Slash, TokenType.Modulo))
             {
-                Token oper = LookBack();
-                IExpression right = Unary();
+                var oper = LookBack();
+                var right = Unary();
                 expr = new BinaryExpression(expr, oper, right);
             }
 
@@ -285,8 +280,8 @@ namespace Language.Parser
         {
             if (IsNext(TokenType.Plus, TokenType.Minus))
             {
-                Token oper = LookBack();
-                IExpression right = Unary();
+                var oper = LookBack();
+                var right = Unary();
                 return new UnaryExpression(oper, right);
             }
 
@@ -307,7 +302,7 @@ namespace Language.Parser
 
             if (IsNext(TokenType.LeftParen))
             {
-                IExpression expr = Expression();
+                var expr = Expression();
                 FindOrError(TokenType.RightParen, "Right paren wasn't find");
                 return expr;
             }
@@ -317,7 +312,7 @@ namespace Language.Parser
 
         private string Indentifier()
         {
-            Token indent = LookBack();
+            var indent = LookBack();
             string identValue;
             if (indent.Type == TokenType.Identifier)
             {

@@ -1,20 +1,15 @@
-﻿using System;
-
-namespace Language
+﻿namespace Language
 {
     public class Token
     {
         public TokenType Type { get; }
-        public object? Literal { get; }
+        public object Literal { get; }
 
-        public int Line { get; }
-        
 
-        public Token(TokenType type, object? literal, int line)
+        public Token(TokenType type, object literal)
         {
             Type = type;
             Literal = literal;
-            Line = line;
         }
 
         public override string ToString()

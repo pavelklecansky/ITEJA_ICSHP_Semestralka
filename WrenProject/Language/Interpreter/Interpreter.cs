@@ -4,12 +4,12 @@ using Language.Parser.Statement;
 
 namespace Language
 {
-    public class Interpreter : IVisiter
+    public class Interpreter : IVisitor
     {
-        private Block block;
+        private Block Block { get; }
         private static readonly Environment SystemEnvironment = new();
         private static readonly Environment Turtle = new(SystemEnvironment);
-        private Environment environment = new(Turtle);
+        private Environment _environment = new(Turtle);
 
         static Interpreter()
         {
@@ -23,18 +23,18 @@ namespace Language
 
         public Interpreter(Block block)
         {
-            this.block = block;
+            Block = block;
         }
 
         public void Interpret()
         {
-            block.Accept(this);
+            Block.Accept(this);
         }
 
         public object VisitAssignStmt(AssignStmt assignStmt)
         {
-            Object value = assignStmt.Value.Accept(this);
-            environment.Assign(assignStmt.Name, value);
+            var value = assignStmt.Value.Accept(this);
+            _environment.Assign(assignStmt.Name, value);
             return value;
         }
 
@@ -45,23 +45,15 @@ namespace Language
 
             var arguments = callStmt.Arguments;
 
-            if (callClass.Type == TokenType.System)
+            switch (callClass.Type)
             {
-                if (SystemEnvironment.Get(identifier) is ICallable function)
-                {
+                case TokenType.System when SystemEnvironment.Get(identifier) is ICallable function:
                     return function.Call(this, arguments);
-                }
-            }
-
-            if (callClass.Type == TokenType.Turtle)
-            {
-                if (Turtle.Get(identifier) is ICallable function)
-                {
+                case TokenType.Turtle when Turtle.Get(identifier) is ICallable function:
                     return function.Call(this, arguments);
-                }
+                default:
+                    throw new ArgumentException("Unexpected expresion.");
             }
-
-            throw new ArgumentException("Unexpected expresion.");
         }
 
         public object VisitIfStmt(IfStmt ifStmt)
@@ -121,10 +113,10 @@ namespace Language
 
         public object VisitBlock(Block block)
         {
-            var oldEnvironment = environment;
+            var oldEnvironment = _environment;
             try
             {
-                environment = new Environment(environment);
+                _environment = new Environment(_environment);
                 foreach (var statement in block.Statements)
                 {
                     statement.Accept(this);
@@ -132,7 +124,7 @@ namespace Language
             }
             finally
             {
-                environment = oldEnvironment;
+                _environment = oldEnvironment;
             }
 
             return null;
@@ -158,13 +150,13 @@ namespace Language
 
         public object VisitVar(Var var)
         {
-            environment.Define(var.Name, var.Value.Accept(this));
+            _environment.Define(var.Name, var.Value.Accept(this));
             return null;
         }
 
         public object VisitVariable(Variable variable)
         {
-            return environment.Get(variable.Name);
+            return _environment.Get(variable.Name);
         }
 
         public object VisitStringLiteral(StringLiteral expr)
