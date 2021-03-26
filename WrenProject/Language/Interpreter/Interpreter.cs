@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Language.Parser;
 using Language.Parser.Statement;
 
@@ -95,34 +96,37 @@ namespace Language
 
         public object VisitBinaryExpr(BinaryExpression binary)
         {
+            var left = binary.Left.Accept(this);
+            var right = binary.Right.Accept(this);
             switch (binary.Operator.Type)
             {
                 case TokenType.Plus:
-                    return (double) binary.Left.Accept(this) + (double) binary.Right.Accept(this);
+                    return Sum(left, right);
                 case TokenType.Minus:
-                    return (double) binary.Left.Accept(this) - (double) binary.Right.Accept(this);
+                    return Subtract(left, right);
                 case TokenType.Slash:
-                    return (double) binary.Left.Accept(this) / (double) binary.Right.Accept(this);
+                    return Divide(left, right);
                 case TokenType.Star:
-                    return (double) binary.Left.Accept(this) * (double) binary.Right.Accept(this);
+                    return Multiply(left, right);
                 case TokenType.Equal:
-                    return (double) binary.Left.Accept(this) == (double) binary.Right.Accept(this);
+                    return IsEqual(left, right);
                 case TokenType.NotEqual:
-                    return (double) binary.Left.Accept(this) != (double) binary.Right.Accept(this);
+                    return !IsEqual(left, right);
                 case TokenType.Less:
-                    return (double) binary.Left.Accept(this) < (double) binary.Right.Accept(this);
+                    return LessCompare(left, right);
                 case TokenType.LessEqual:
-                    return (double) binary.Left.Accept(this) <= (double) binary.Right.Accept(this);
+                    return LessEqualCompare(left, right);
                 case TokenType.Greater:
-                    return (double) binary.Left.Accept(this) > (double) binary.Right.Accept(this);
+                    return GreaterCompare(left, right);
                 case TokenType.GreaterEqual:
-                    return (double) binary.Left.Accept(this) >= (double) binary.Right.Accept(this);
+                    return GreaterEqualCompare(left, right);
                 case TokenType.Modulo:
-                    return (double) binary.Left.Accept(this) % (double) binary.Right.Accept(this);
+                    return Modulo(left, right);
             }
 
             throw new ArgumentException("Unknown expression operator.");
         }
+
 
         public object VisitBlock(Block block)
         {
@@ -175,6 +179,121 @@ namespace Language
         public object VisitStringLiteral(StringLiteral expr)
         {
             return expr.Value;
+        }
+
+        private object Multiply(object left, object right)
+        {
+            if (left is double leftDouble && right is double rightDouble)
+            {
+                return leftDouble * rightDouble;
+            }
+
+            if (left is string leftString && right is double rightDouble2)
+            {
+                return String.Concat(Enumerable.Repeat(leftString, (int) rightDouble2));
+            }
+
+            throw new ArgumentException("You must multiply numbers or string by number");
+        }
+
+        private object Divide(object left, object right)
+        {
+            if (left is double leftDouble && right is double rightDouble)
+            {
+                return leftDouble / rightDouble;
+            }
+
+            throw new ArgumentException("You must divide numbers.");
+        }
+
+        private object Subtract(object left, object right)
+        {
+            if (left is double leftDouble && right is double rightDouble)
+            {
+                return leftDouble - rightDouble;
+            }
+
+            throw new ArgumentException("You must subtract numbers.");
+        }
+
+        private object Sum(object left, object right)
+        {
+            if (left is string leftString && right is string rightString)
+            {
+                return leftString + rightString;
+            }
+
+            if (left is double leftDouble && right is double rightDouble)
+            {
+                return leftDouble + rightDouble;
+            }
+
+            throw new ArgumentException("You must concat same types");
+        }
+
+        private bool IsEqual(object left, object right)
+        {
+            if (left is string leftString && right is string rightString)
+            {
+                return leftString == rightString;
+            }
+
+            if (left is double leftDouble && right is double rightDouble)
+            {
+                return leftDouble == rightDouble;
+            }
+
+            return left == right;
+        }
+
+        private object GreaterEqualCompare(object left, object right)
+        {
+            if (left is double leftDouble && right is double rightDouble)
+            {
+                return leftDouble >= rightDouble;
+            }
+
+            throw new ArgumentException("You can't use >= on string.");
+        }
+
+        private object GreaterCompare(object left, object right)
+        {
+            if (left is double leftDouble && right is double rightDouble)
+            {
+                return leftDouble > rightDouble;
+            }
+
+            throw new ArgumentException("You can't use > on string.");
+        }
+
+        private object LessEqualCompare(object left, object right)
+        {
+            if (left is double leftDouble && right is double rightDouble)
+            {
+                return leftDouble <= rightDouble;
+            }
+
+            throw new ArgumentException("You can't use <= on string.");
+        }
+
+        private object LessCompare(object left, object right)
+        {
+            if (left is double leftDouble && right is double rightDouble)
+            {
+                return leftDouble < rightDouble;
+            }
+
+            throw new ArgumentException("You can't use < on string.");
+        }
+
+        private object Modulo(object left, object right)
+        {
+            if (left is double leftDouble && right is double rightDouble)
+            {
+                return leftDouble % rightDouble;
+            }
+
+            throw new ArgumentException("You can't use % on string.");
         }
     }
 }
