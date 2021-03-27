@@ -36,13 +36,11 @@ namespace Language
             // 
             // Canvas
             // 
-            this.Canvas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Canvas.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.Canvas.BackColor = System.Drawing.Color.White;
             this.Canvas.Location = new System.Drawing.Point(0, 0);
             this.Canvas.Name = "Canvas";
-            this.Canvas.Size = new System.Drawing.Size(1118, 553);
+            this.Canvas.Size = new System.Drawing.Size(1184, 761);
             this.Canvas.TabIndex = 0;
             // 
             // DrawingPanel
@@ -50,13 +48,12 @@ namespace Language
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkRed;
-            this.ClientSize = new System.Drawing.Size(1117, 553);
+            this.ClientSize = new System.Drawing.Size(1184, 761);
             this.Controls.Add(this.Canvas);
             this.Name = "DrawingPanel";
             this.Text = "DrawingPanel";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DrawingPanel_FormClosed);
             this.ResumeLayout(false);
-
         }
 
         public System.Windows.Forms.Panel Canvas;

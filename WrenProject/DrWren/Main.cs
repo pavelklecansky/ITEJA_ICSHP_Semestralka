@@ -12,6 +12,18 @@ namespace DrWren
         {
             InitializeComponent();
             ChangeTitleName("Untitled");
+            TextBox.KeyPress += TextBoxOnKeyPress;
+            TextBox.TextChanged += TextBoxOnTextChanged;
+        }
+
+        private void TextBoxOnTextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void TextBoxOnKeyPress(object sender, KeyPressEventArgs e)
+        {
+            SyntaxHighlighter.Highlight(TextBox);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -22,6 +34,9 @@ namespace DrWren
                 ChangeTitleName(FileName);
                 TextBox.LoadFile(FileName, RichTextBoxStreamType.PlainText);
             }
+
+            SyntaxHighlighter.Highlight(TextBox);
+            TextBox.Select(0, 0);
         }
 
         private void Main_Load(object sender, EventArgs e)

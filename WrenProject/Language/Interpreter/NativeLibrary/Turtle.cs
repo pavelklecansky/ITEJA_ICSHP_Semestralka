@@ -12,8 +12,6 @@ namespace Language
         private static Graphics DrawGraphics { get; set; }
         private static Pen DrawPen { get; set; }
 
-       // private static PictureBox TurtleImage { get; set; }
-
         private static DrawingPanel Forms { get; set; }
 
         private static float X { get; set; }
@@ -35,24 +33,18 @@ namespace Language
         {
             Dispose();
             Direction = 0;
-            PenWidth = 4;
+            PenWidth = 5;
 
             DrawControl = Forms;
 
             DrawPen = new Pen(Color.Black, PenWidth) {StartCap = LineCap.Round, EndCap = LineCap.Round};
-            
+
             DrawGraphics = Forms.Graphics;
             Forms.Canvas.Paint += CanvasOnPaint;
             Forms.Canvas.ClientSizeChanged += ClientSizeChanged;
             X = Forms.Canvas.ClientSize.Width / 2;
             Y = Forms.Canvas.ClientSize.Height / 2;
             DrawGraphics.SmoothingMode = SmoothingMode.AntiAlias;
-            // TurtleImage = new PictureBox();
-            // TurtleImage.Left = (int) Y;
-            // TurtleImage.Top = (int) X;
-            // TurtleImage.Size = new Size(100, 100);
-            // TurtleImage.BackColor = Color.Transparent;
-            //forms.Controls.Add(TurtleImage);
         }
 
         private static void CanvasOnPaint(object sender, PaintEventArgs e)
@@ -92,21 +84,7 @@ namespace Language
             X += (float) (steps * Math.Cos(radians));
             Y += (float) (steps * Math.Sin(radians));
             DrawGraphics.DrawLine(DrawPen, oldX, oldY, X, Y);
-            //DrawGraphics.Draw(TurtleImage.BackgroundImage, X, Y);
-            // DrawTurtle();
         }
-
-        // private static void DrawTurtle()
-        // {
-        //     var turtleImg = new Bitmap(@"E:\Programovany\ITEJA_ICSHP_Semestralka\WrenProject\Language\turtle.png");
-        //     var turtleImgSize = Math.Max(turtleImg.Width, turtleImg.Height);
-        //     TurtleImage.BackgroundImage = turtleImg;
-        //     TurtleImage.Width = turtleImg.Width;
-        //     TurtleImage.Height = turtleImg.Height;
-        //
-        //     TurtleImage.Left = 100;
-        //     TurtleImage.Top = 100;
-        // }
 
         public static void Done()
         {
