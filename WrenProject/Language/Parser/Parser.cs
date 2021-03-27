@@ -5,6 +5,9 @@ using Language.Parser.Statement;
 
 namespace Language.Parser
 {
+    /// <summary>
+    /// Creates Syntax tree from list of tokens.
+    /// </summary>
     public class Parser
     {
         private readonly List<Token> _tokens;
@@ -21,6 +24,11 @@ namespace Language.Parser
             return Program();
         }
 
+        /// <summary>
+        /// Check if next token corresponds to given types and advance to that token.
+        /// </summary>
+        /// <param name="types"></param>
+        /// <returns></returns>
         private bool IsNext(params TokenType[] types)
         {
             if (types.Any(Verify))
@@ -32,6 +40,9 @@ namespace Language.Parser
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private bool Verify(TokenType type)
         {
             if (End())

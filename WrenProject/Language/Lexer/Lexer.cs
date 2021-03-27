@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Language.Lexer
 {
+    /// <summary>
+    /// From source code create series of tokens.
+    /// </summary>
     internal class Lexer
     {
         private readonly List<Token> _tokens = new();
@@ -31,6 +34,9 @@ namespace Language.Lexer
             _source = source;
         }
 
+        /// <summary>
+        /// Return tokens created from source code.
+        /// </summary>
         public List<Token> GetTokens()
         {
             while (!End())
@@ -199,7 +205,7 @@ namespace Language.Lexer
         {
             if (End()) return false;
             if (_source[_current] != expected) return false;
-            
+
             _current++;
             return true;
         }

@@ -4,6 +4,9 @@ using System.Windows.Forms;
 
 namespace Language
 {
+    /// <summary>
+    /// Main class for Wren interpreter.
+    /// </summary>
     public static class Wren
     {
         private static void Main(string[] args)

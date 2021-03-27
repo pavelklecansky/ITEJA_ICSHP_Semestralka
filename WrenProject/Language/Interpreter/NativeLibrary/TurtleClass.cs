@@ -4,6 +4,9 @@ using Language.Parser;
 
 namespace Language
 {
+    /// <summary>
+    /// Implementation of native Turtle class.
+    /// </summary>
     internal abstract class TurtleClass
     {
         internal class Left : ICallable

@@ -4,8 +4,14 @@ using Language.Parser;
 
 namespace Language
 {
+    /// <summary>
+    /// Implementation of native System class. 
+    /// </summary>
     internal abstract class SystemClass
     {
+        /// <summary>
+        /// Write text to standard output followed by newline.
+        /// </summary>
         internal class Print : ICallable
         {
             public object Call(Interpreter interpreter, List<IExpression> arguments)
