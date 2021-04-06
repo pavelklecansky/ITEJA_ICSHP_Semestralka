@@ -24,16 +24,14 @@ namespace DrWren
             Keywords.Add("else");
             Keywords.Add("System");
             Keywords.Add("Turtle");
-            //Óperators inicialization
+            // //Óperators inicialization
             Operators.Add("=");
             Operators.Add("!=");
             Operators.Add("==");
             Operators.Add(">=");
             Operators.Add(">");
             Operators.Add("<=");
-            Operators.Add("+");
             Operators.Add("-");
-            Operators.Add("*");
             Operators.Add("/");
             Operators.Add("%");
 
@@ -42,7 +40,7 @@ namespace DrWren
 
         public static void Highlight(RichTextBox textBox)
         {
-            //ClearColor(textBox);
+            ClearColor(textBox);
             ColorText(textBox, Keywords, Color.Red);
             ColorText(textBox, Operators, Color.Red);
             ColorText(textBox, String, Color.Yellow); 
@@ -77,8 +75,7 @@ namespace DrWren
             var indexesAndSize = new List<Tuple<int, int>>();
             foreach (var keyword in keywords)
             {
-                var matchString = Regex.Escape(keyword);
-                foreach (Match match in Regex.Matches(text, matchString))
+                foreach (Match match in Regex.Matches(text, keyword))
                 {
                     indexesAndSize.Add(new Tuple<int, int>(match.Index, match.Length));
                 }

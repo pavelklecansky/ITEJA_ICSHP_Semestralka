@@ -12,19 +12,17 @@ namespace DrWren
         {
             InitializeComponent();
             ChangeTitleName("Untitled");
-            TextBox.KeyPress += TextBoxOnKeyPress;
             TextBox.TextChanged += TextBoxOnTextChanged;
         }
 
         private void TextBoxOnTextChanged(object sender, EventArgs e)
         {
-            
+            if (TextBox.Modified)
+            {
+                SyntaxHighlighter.Highlight(TextBox);
+            }
         }
 
-        private void TextBoxOnKeyPress(object sender, KeyPressEventArgs e)
-        {
-            SyntaxHighlighter.Highlight(TextBox);
-        }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -115,16 +113,6 @@ namespace DrWren
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            TextBox.Undo();
-        }
-
-        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            TextBox.Redo();
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
