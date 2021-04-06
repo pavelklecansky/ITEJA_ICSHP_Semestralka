@@ -20,6 +20,6 @@ This project is school project for Language theory and The C# Programming Langua
 
 ## Screenshots:
 
-![](E:\Programovany\ITEJA_ICSHP_Semestralka\Images\2021-04-06-17-16-41-image.png)
+![DrWren](./Images/2021-04-06-17-16-41-image.png)
 
-![](E:\Programovany\ITEJA_ICSHP_Semestralka\Images\2021-04-06-17-16-55-image.png)
+![Turtle Graphics](./Images/2021-04-06-17-16-55-image.png)
