@@ -43,7 +43,7 @@ namespace DrWren
             ClearColor(textBox);
             ColorText(textBox, Keywords, Color.Red);
             ColorText(textBox, Operators, Color.Red);
-            ColorText(textBox, String, Color.Yellow); 
+            ColorText(textBox, String, Color.Orange); 
             
         }
 
