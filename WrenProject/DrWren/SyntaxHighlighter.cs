@@ -10,10 +10,9 @@ namespace DrWren
 {
     public static class SyntaxHighlighter
     {
-        private static List<string> Keywords { get; } = new();
-        private static List<string> Operators { get; } = new();
-
-        private static List<string> String { get; } = new();
+        private static IList<string> Keywords { get; } = new List<string>();
+        private static IList<string> Operators { get; } = new List<string>();
+        private static IList<string> Literals { get; } = new List<string>();
 
         static SyntaxHighlighter()
         {
@@ -24,7 +23,7 @@ namespace DrWren
             Keywords.Add("else");
             Keywords.Add("System");
             Keywords.Add("Turtle");
-            // //Óperators inicialization
+            // Operators inicialization
             Operators.Add("=");
             Operators.Add("!=");
             Operators.Add("==");
@@ -35,16 +34,16 @@ namespace DrWren
             Operators.Add("/");
             Operators.Add("%");
 
-            String.Add("(\"[^\"\r\n]*\")");
+            // Literals
+            Literals.Add("(\"[^\"\r\n]*\")");
         }
 
         public static void Highlight(RichTextBox textBox)
         {
             ClearColor(textBox);
-            ColorText(textBox, Keywords, Color.Red);
-            ColorText(textBox, Operators, Color.Red);
-            ColorText(textBox, String, Color.Orange); 
-            
+            ChangeTextColor(textBox, Keywords, Color.Red);
+            ChangeTextColor(textBox, Operators, Color.Red);
+            ChangeTextColor(textBox, Literals, Color.Orange);
         }
 
         private static void ClearColor(RichTextBox textBox)
@@ -55,33 +54,33 @@ namespace DrWren
             textBox.Select(position, 0);
         }
 
-        private static void ColorText(RichTextBox textBox, List<string> keywords, Color color)
+        private static void ChangeTextColor(RichTextBox textBox, IList<string> keywords, Color color)
         {
             var text = textBox.Text;
-            var indexAndSize = AllIndexOfAndSize(text, keywords);
-            foreach (var tuple in indexAndSize)
+            var allIndexesAndSize = AllIndexOfAndSize(text, keywords);
+            foreach (var indexLenghtPair in allIndexesAndSize)
             {
                 var position = textBox.SelectionStart + textBox.SelectionLength;
                 var oldColor = textBox.SelectionColor;
-                textBox.Select(tuple.Item1, tuple.Item2);
+                textBox.Select(indexLenghtPair.Item1, indexLenghtPair.Item2);
                 textBox.SelectionColor = color;
                 textBox.Select(position, 0);
                 textBox.SelectionColor = oldColor;
             }
         }
 
-        private static List<Tuple<int, int>> AllIndexOfAndSize(string text, List<string> keywords)
+        private static List<Tuple<int, int>> AllIndexOfAndSize(string text, IList<string> keywords)
         {
-            var indexesAndSize = new List<Tuple<int, int>>();
+            var allIndexesAndSize = new List<Tuple<int, int>>();
             foreach (var keyword in keywords)
             {
                 foreach (Match match in Regex.Matches(text, keyword))
                 {
-                    indexesAndSize.Add(new Tuple<int, int>(match.Index, match.Length));
+                    allIndexesAndSize.Add(new Tuple<int, int>(match.Index, match.Length));
                 }
             }
 
-            return indexesAndSize;
+            return allIndexesAndSize;
         }
     }
 }
