@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Language;
@@ -14,6 +15,9 @@ namespace DrWren
         private static IList<Regex> Operators { get; } = new List<Regex>();
         private static IList<Regex> Literals { get; } = new List<Regex>();
 
+        private static Label FocusLabel = new();
+
+
         static SyntaxHighlighter()
         {
             //Keywords initialization
@@ -23,16 +27,6 @@ namespace DrWren
             Keywords.Add(new Regex("else", RegexOptions.Compiled));
             Keywords.Add(new Regex("System", RegexOptions.Compiled));
             Keywords.Add(new Regex("Turtle", RegexOptions.Compiled));
-            // Operators inicialization
-            Operators.Add(new Regex("=", RegexOptions.Compiled));
-            Operators.Add(new Regex("!=", RegexOptions.Compiled));
-            Operators.Add(new Regex("==", RegexOptions.Compiled));
-            Operators.Add(new Regex(">=", RegexOptions.Compiled));
-            Operators.Add(new Regex(">", RegexOptions.Compiled));
-            Operators.Add(new Regex("<=", RegexOptions.Compiled));
-            Operators.Add(new Regex("-", RegexOptions.Compiled));
-            Operators.Add(new Regex("/", RegexOptions.Compiled));
-            Operators.Add(new Regex("%", RegexOptions.Compiled));
 
             // Literals
             Literals.Add(new Regex("(\"[^\"\r\n]*\")", RegexOptions.Compiled));
@@ -40,18 +34,23 @@ namespace DrWren
 
         public static void Highlight(RichTextBox textBox)
         {
-            ClearColor(textBox);
+            int originalIndex = textBox.SelectionStart;
+            int originalLength = textBox.SelectionLength;
+            Color originalColor = Color.Black;
+            ClearColor(textBox, originalColor);
             ChangeTextColor(textBox, Keywords, Color.Red);
             ChangeTextColor(textBox, Operators, Color.Red);
             ChangeTextColor(textBox, Literals, Color.Orange);
+            textBox.SelectionStart = originalIndex;
+            textBox.SelectionLength = originalLength;
+            textBox.SelectionColor = originalColor;
         }
 
-        private static void ClearColor(RichTextBox textBox)
+        private static void ClearColor(RichTextBox textBox, Color color)
         {
-            var position = textBox.SelectionStart + textBox.SelectionLength;
-            textBox.SelectAll();
-            textBox.SelectionColor = Color.Black;
-            textBox.Select(position, 0);
+            textBox.SelectionStart = 0;
+            textBox.SelectionLength = textBox.Text.Length;
+            textBox.SelectionColor = color;
         }
 
         private static void ChangeTextColor(RichTextBox textBox, IList<Regex> keywords, Color color)
@@ -60,12 +59,9 @@ namespace DrWren
             var allIndexesAndSize = AllIndexOfAndSize(text, keywords);
             foreach (var indexLenghtPair in allIndexesAndSize)
             {
-                var position = textBox.SelectionStart + textBox.SelectionLength;
-                var oldColor = textBox.SelectionColor;
-                textBox.Select(indexLenghtPair.Item1, indexLenghtPair.Item2);
+                textBox.SelectionStart = indexLenghtPair.Item1;
+                textBox.SelectionLength = indexLenghtPair.Item2;
                 textBox.SelectionColor = color;
-                textBox.Select(position, 0);
-                textBox.SelectionColor = oldColor;
             }
         }
 

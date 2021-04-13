@@ -12,14 +12,22 @@ namespace DrWren
         {
             InitializeComponent();
             ChangeTitleName("Untitled");
-            TextBox.TextChanged += TextBoxOnTextChanged;
+            DoubleBuffered = true;
+            TextBox.KeyUp += TextBoxOnTextChanged;
         }
 
         private void TextBoxOnTextChanged(object sender, EventArgs e)
         {
+            HiglightText();
+        }
+
+        private void HiglightText()
+        {
             if (TextBox.Modified)
             {
+                errorslabel.Focus();
                 SyntaxHighlighter.Highlight(TextBox);
+                TextBox.Focus();
             }
         }
 
@@ -33,7 +41,8 @@ namespace DrWren
                 TextBox.LoadFile(FileName, RichTextBoxStreamType.PlainText);
             }
 
-            SyntaxHighlighter.Highlight(TextBox);
+            HiglightText();
+            
             TextBox.Select(0, 0);
         }
 
