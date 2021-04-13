@@ -10,32 +10,32 @@ namespace DrWren
 {
     public static class SyntaxHighlighter
     {
-        private static IList<string> Keywords { get; } = new List<string>();
-        private static IList<string> Operators { get; } = new List<string>();
-        private static IList<string> Literals { get; } = new List<string>();
+        private static IList<Regex> Keywords { get; } = new List<Regex>();
+        private static IList<Regex> Operators { get; } = new List<Regex>();
+        private static IList<Regex> Literals { get; } = new List<Regex>();
 
         static SyntaxHighlighter()
         {
             //Keywords initialization
-            Keywords.Add("var");
-            Keywords.Add("while");
-            Keywords.Add("if");
-            Keywords.Add("else");
-            Keywords.Add("System");
-            Keywords.Add("Turtle");
+            Keywords.Add(new Regex("var", RegexOptions.Compiled));
+            Keywords.Add(new Regex("while", RegexOptions.Compiled));
+            Keywords.Add(new Regex("if", RegexOptions.Compiled));
+            Keywords.Add(new Regex("else", RegexOptions.Compiled));
+            Keywords.Add(new Regex("System", RegexOptions.Compiled));
+            Keywords.Add(new Regex("Turtle", RegexOptions.Compiled));
             // Operators inicialization
-            Operators.Add("=");
-            Operators.Add("!=");
-            Operators.Add("==");
-            Operators.Add(">=");
-            Operators.Add(">");
-            Operators.Add("<=");
-            Operators.Add("-");
-            Operators.Add("/");
-            Operators.Add("%");
+            Operators.Add(new Regex("=", RegexOptions.Compiled));
+            Operators.Add(new Regex("!=", RegexOptions.Compiled));
+            Operators.Add(new Regex("==", RegexOptions.Compiled));
+            Operators.Add(new Regex(">=", RegexOptions.Compiled));
+            Operators.Add(new Regex(">", RegexOptions.Compiled));
+            Operators.Add(new Regex("<=", RegexOptions.Compiled));
+            Operators.Add(new Regex("-", RegexOptions.Compiled));
+            Operators.Add(new Regex("/", RegexOptions.Compiled));
+            Operators.Add(new Regex("%", RegexOptions.Compiled));
 
             // Literals
-            Literals.Add("(\"[^\"\r\n]*\")");
+            Literals.Add(new Regex("(\"[^\"\r\n]*\")", RegexOptions.Compiled));
         }
 
         public static void Highlight(RichTextBox textBox)
@@ -54,7 +54,7 @@ namespace DrWren
             textBox.Select(position, 0);
         }
 
-        private static void ChangeTextColor(RichTextBox textBox, IList<string> keywords, Color color)
+        private static void ChangeTextColor(RichTextBox textBox, IList<Regex> keywords, Color color)
         {
             var text = textBox.Text;
             var allIndexesAndSize = AllIndexOfAndSize(text, keywords);
@@ -69,12 +69,12 @@ namespace DrWren
             }
         }
 
-        private static List<Tuple<int, int>> AllIndexOfAndSize(string text, IList<string> keywords)
+        private static List<Tuple<int, int>> AllIndexOfAndSize(string text, IList<Regex> keywords)
         {
             var allIndexesAndSize = new List<Tuple<int, int>>();
             foreach (var keyword in keywords)
             {
-                foreach (Match match in Regex.Matches(text, keyword))
+                foreach (Match match in keyword.Matches(text))
                 {
                     allIndexesAndSize.Add(new Tuple<int, int>(match.Index, match.Length));
                 }
