@@ -1,5 +1,4 @@
-var x = 0
- 
+var x = 0 
 while(x <= 360){
     Turtle.forward(x)
     Turtle.left(59)

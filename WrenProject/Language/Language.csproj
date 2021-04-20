@@ -2,8 +2,12 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net472</TargetFramework>
         <LangVersion>9</LangVersion>
+        <Company>wren</Company>
+        <Product>wren</Product>
+        <PackageId>Wren</PackageId>
+        <Authors>Pavel Klečanský</Authors>
+        <TargetFrameworks>net40;net45;net451;net452;net46;net461;net472</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
