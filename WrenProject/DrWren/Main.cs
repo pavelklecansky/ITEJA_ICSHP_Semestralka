@@ -12,16 +12,15 @@ namespace DrWren
         {
             InitializeComponent();
             ChangeTitleName("Untitled");
-            DoubleBuffered = true;
             TextBox.KeyUp += TextBoxOnTextChanged;
         }
 
         private void TextBoxOnTextChanged(object sender, EventArgs e)
         {
-            HiglightText();
+            HighlightText();
         }
 
-        private void HiglightText()
+        private void HighlightText()
         {
             if (TextBox.Modified)
             {
@@ -41,7 +40,7 @@ namespace DrWren
                 TextBox.LoadFile(FileName, RichTextBoxStreamType.PlainText);
             }
 
-            HiglightText();
+            HighlightText();
             
             TextBox.Select(0, 0);
         }
@@ -95,14 +94,15 @@ namespace DrWren
             {
                 var result = MessageBox.Show(@"Would you like to save your changes?", @"Save changes",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (result == DialogResult.Yes)
+                switch (result)
                 {
-                    SaveFile();
-                }
-                else if (result == DialogResult.No)
-                {
-                    TextBox.ResetText();
-                    TextBox.Focus();
+                    case DialogResult.Yes:
+                        SaveFile();
+                        break;
+                    case DialogResult.No:
+                        TextBox.ResetText();
+                        TextBox.Focus();
+                        break;
                 }
             }
             else
@@ -161,11 +161,13 @@ namespace DrWren
 
         private void RunButton_Click(object sender, EventArgs e)
         {
+            OutputTextBox.Clear();
             Language.Wren.Run(TextBox.Text, new OutputWriter(OutputTextBox));
         }
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            OutputTextBox.Clear();
             Language.Wren.Run(TextBox.Text, new OutputWriter(OutputTextBox));
         }
     }

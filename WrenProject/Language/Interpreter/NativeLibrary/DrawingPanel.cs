@@ -10,11 +10,10 @@ namespace Language
         
         public DrawingPanel()
         {
-           
+            Text = @"Turtle Graphics";
             InitializeComponent();
             Graphics = Canvas.CreateGraphics();
             ResizeRedraw = true;
-            DoubleBuffered = true;
         }
 
         private void DrawingPanel_FormClosed(object sender, FormClosedEventArgs e)

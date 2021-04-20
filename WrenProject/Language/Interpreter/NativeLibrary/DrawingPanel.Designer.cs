@@ -2,7 +2,7 @@
 
 namespace Language
 {
-    partial class DrawingPanel
+    sealed partial class DrawingPanel
     {
         /// <summary>
         /// Required designer variable.

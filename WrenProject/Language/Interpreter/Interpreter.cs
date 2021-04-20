@@ -190,7 +190,7 @@ namespace Language
 
             if (left is string leftString && right is double rightDouble2)
             {
-                return String.Concat(Enumerable.Repeat(leftString, (int) rightDouble2));
+                return string.Concat(Enumerable.Repeat(leftString, (int) rightDouble2));
             }
 
             throw new ArgumentException("You must multiply numbers or string by number");

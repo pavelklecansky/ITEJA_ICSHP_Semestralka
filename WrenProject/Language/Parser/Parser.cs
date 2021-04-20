@@ -137,7 +137,7 @@ namespace Language.Parser
 
             if (IsNext(TokenType.Identifier))
             {
-                return AssignStatment();
+                return AssignStatement();
             }
 
             return null;
@@ -150,13 +150,13 @@ namespace Language.Parser
             FindOrError(TokenType.Period, "Expect . after Class");
             if (IsNext(TokenType.Identifier))
             {
-                var identifierValue = Indentifier();
+                var identifierValue = Identifier();
                 FindOrError(TokenType.LeftParen, "Expect '(' after 'if'.");
                 if (!Verify(TokenType.RightParen))
                 {
                     do
                     {
-                        arguments.Add(ExpOrString());
+                        arguments.Add(ExpressionOrString());
                     } while (IsNext(TokenType.Comma));
                 }
 
@@ -168,15 +168,15 @@ namespace Language.Parser
             throw new ArgumentException("Unexpected expresion.");
         }
 
-        private IStatement AssignStatment()
+        private IStatement AssignStatement()
         {
-            var identifierName = Indentifier();
+            var identifierName = Identifier();
             FindOrError(TokenType.Assignment, "Expect '=' after identifier.");
-            var expression = ExpOrString();
+            var expression = ExpressionOrString();
             return new AssignStatement(identifierName, expression);
         }
 
-        private IExpression ExpOrString()
+        private IExpression ExpressionOrString()
         {
             if (IsNext(TokenType.String))
             {
@@ -193,7 +193,7 @@ namespace Language.Parser
             IExpression initValue = null;
             if (IsNext(TokenType.Assignment))
             {
-                initValue = ExpOrString();
+                initValue = ExpressionOrString();
             }
 
             return new Var(name.Literal.ToString(), initValue);
@@ -308,7 +308,7 @@ namespace Language.Parser
 
             if (IsNext(TokenType.Identifier))
             {
-                return new Variable(Indentifier());
+                return new Variable(Identifier());
             }
 
             if (IsNext(TokenType.LeftParen))
@@ -321,7 +321,7 @@ namespace Language.Parser
             throw new ArgumentException("Unexpected expresion.");
         }
 
-        private string Indentifier()
+        private string Identifier()
         {
             var identifier = LookBack();
             string identifierValue;

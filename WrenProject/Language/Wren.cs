@@ -17,7 +17,7 @@ namespace Language
             }
             else
             {
-                Console.WriteLine("Usage: wren <script>");
+                Console.WriteLine(@"Usage: wren <script>");
                 Application.Exit();
             }
         }
