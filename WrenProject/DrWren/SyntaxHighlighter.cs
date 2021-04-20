@@ -58,7 +58,7 @@ namespace DrWren
             textBox.SelectionColor = color;
         }
 
-        private static void ChangeTextColor(RichTextBox textBox, IList<Regex> keywords, Color color)
+        private static void ChangeTextColor(RichTextBox textBox, IEnumerable<Regex> keywords, Color color)
         {
             var text = textBox.Text;
             var allIndexesAndSize = AllIndexOfAndSize(text, keywords);
@@ -70,7 +70,7 @@ namespace DrWren
             }
         }
 
-        private static List<Tuple<int, int>> AllIndexOfAndSize(string text, IList<Regex> keywords)
+        private static IEnumerable<Tuple<int, int>> AllIndexOfAndSize(string text, IEnumerable<Regex> keywords)
         {
             var allIndexesAndSize = new List<Tuple<int, int>>();
             foreach (var keyword in keywords)

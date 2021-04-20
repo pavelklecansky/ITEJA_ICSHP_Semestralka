@@ -10,6 +10,7 @@ namespace Language.Tests
         public OutputWriter(string output)
         {
             Output = output;
+            Encoding = Encoding.Default;
         }
 
         public override void WriteLine(char value)

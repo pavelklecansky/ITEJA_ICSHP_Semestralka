@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Language.Parser.Statement;
+using Language.Lexer;
 
-namespace Language.Parser
+namespace Language.Parser.Statement
 {
     public class CallStatement : IStatement
     {

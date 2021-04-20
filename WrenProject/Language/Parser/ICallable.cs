@@ -4,6 +4,6 @@ namespace Language.Parser
 {
     public interface ICallable
     {
-        object Call(Interpreter interpreter, List<IExpression> arguments);
+        object Call(Interpreter.Interpreter interpreter, List<IExpression> arguments);
     }
 }

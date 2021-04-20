@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Language
+namespace Language.Interpreter.NativeLibrary
 {
     sealed partial class DrawingPanel
     {

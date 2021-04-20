@@ -1,4 +1,4 @@
-﻿namespace Language
+﻿namespace Language.Lexer
 {
     public class Token
     {

@@ -1,4 +1,6 @@
-﻿namespace Language.Parser
+﻿using Language.Lexer;
+
+namespace Language.Parser
 {
     public class BinaryExpression : IExpression
     {

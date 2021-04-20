@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Language.Parser;
 
-namespace Language
+namespace Language.Interpreter.NativeLibrary
 {
     /// <summary>
     /// Implementation of native System class. 

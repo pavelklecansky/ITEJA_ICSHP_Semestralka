@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Windows.Forms;
 
 namespace DrWren
@@ -144,7 +145,7 @@ namespace DrWren
             TextBox.SelectAll();
         }
 
-        private void PrintDocument_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
             e.Graphics.DrawString(TextBox.Text, TextBox.Font, Brushes.Black, 80, 10);
             e.Graphics.PageUnit = GraphicsUnit.Inch;

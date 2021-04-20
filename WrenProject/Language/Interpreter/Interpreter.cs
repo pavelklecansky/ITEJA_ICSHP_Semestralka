@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using Language.Interpreter.NativeLibrary;
+using Language.Lexer;
 using Language.Parser;
 using Language.Parser.Statement;
 
-namespace Language
+namespace Language.Interpreter
 {
     public class Interpreter : IVisitor
     {

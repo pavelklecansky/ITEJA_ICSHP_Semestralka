@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 
+
 namespace Language
 {
     /// <summary>
@@ -40,7 +41,7 @@ namespace Language
 
             var parser = new Parser.Parser(lexer.GetTokens());
 
-            var interpreter = new Interpreter(parser.Parse());
+            var interpreter = new Interpreter.Interpreter(parser.Parse());
             interpreter.Interpret();
         }
     }

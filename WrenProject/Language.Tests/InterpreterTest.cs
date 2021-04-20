@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Language.Tests
 {
-    public class IntepreterTest
+    public class InterpreterTest
     {
         [Fact]
         public void Print01()

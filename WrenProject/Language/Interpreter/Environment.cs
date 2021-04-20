@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Language
+namespace Language.Interpreter
 {
     /// <summary>
     /// Store bindings of names and values.
     /// </summary>
     internal class Environment
     {
-        private readonly Environment parentEnvironment;
-        private readonly Dictionary<string, object> values = new();
+        private readonly Environment _parentEnvironment;
+        private readonly Dictionary<string, object> _values = new();
 
 
         public Environment()
         {
-            parentEnvironment = null;
+            _parentEnvironment = null;
         }
 
         public Environment(Environment parentEnvironment)
         {
-            this.parentEnvironment = parentEnvironment;
+            _parentEnvironment = parentEnvironment;
         }
 
         /// <summary>
@@ -27,14 +27,14 @@ namespace Language
         /// </summary>
         public object Get(string name)
         {
-            if (values.TryGetValue(name, out var value))
+            if (_values.TryGetValue(name, out var value))
             {
                 return value;
             }
 
-            if (parentEnvironment != null)
+            if (_parentEnvironment != null)
             {
-                return parentEnvironment.Get(name);
+                return _parentEnvironment.Get(name);
             }
 
             throw new ArgumentException("Variable don't exists");
@@ -45,7 +45,7 @@ namespace Language
         /// </summary>
         public void Define(string name, object value)
         {
-            values.Add(name, value);
+            _values.Add(name, value);
         }
 
         /// <summary>
@@ -53,15 +53,15 @@ namespace Language
         /// </summary>
         public void Assign(string name, object value)
         {
-            if (values.ContainsKey(name))
+            if (_values.ContainsKey(name))
             {
-                values[name] = value;
+                _values[name] = value;
                 return;
             }
 
-            if (parentEnvironment != null)
+            if (_parentEnvironment != null)
             {
-                parentEnvironment.Assign(name, value);
+                _parentEnvironment.Assign(name, value);
                 return;
             }
 
