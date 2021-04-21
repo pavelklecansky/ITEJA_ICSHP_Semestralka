@@ -1,5 +1,10 @@
-﻿namespace Language.Parser.Statement
+﻿using Language.Interpreter;
+
+namespace Language.Parser.Statement
 {
+    /// <summary>
+    /// Representation of while statement
+    /// </summary>
     public class WhileStatement : IStatement
     {
         public IExpression Condition { get; }

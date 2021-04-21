@@ -1,5 +1,10 @@
-﻿namespace Language.Parser.Statement
+﻿using Language.Interpreter;
+
+namespace Language.Parser.Statement
 {
+    /// <summary>
+    /// Representation of if statement
+    /// </summary>
     public class IfStatement : IStatement
     {
         public IExpression Condition { get; }

@@ -1,5 +1,10 @@
-﻿namespace Language.Parser
+﻿using Language.Interpreter;
+
+namespace Language.Parser
 {
+    /// <summary>
+    /// Representation of number
+    /// </summary>
     public class Number : IExpression
     {
         public double Value { get; }

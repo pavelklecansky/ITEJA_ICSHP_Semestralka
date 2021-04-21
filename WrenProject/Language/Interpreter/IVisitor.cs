@@ -1,7 +1,11 @@
-﻿using Language.Parser.Statement;
+﻿using Language.Parser;
+using Language.Parser.Statement;
 
-namespace Language.Parser
+namespace Language.Interpreter
 {
+    /// <summary>
+    /// Defines a visitor contract for each elements in interpreter
+    /// </summary>
     public interface IVisitor
     {
         object VisitAssignStmt(AssignStatement assignStatement);

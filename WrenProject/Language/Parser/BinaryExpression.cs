@@ -1,7 +1,11 @@
-﻿using Language.Lexer;
+﻿using Language.Interpreter;
+using Language.Lexer;
 
 namespace Language.Parser
 {
+    /// <summary>
+    /// Representation of binary expressions
+    /// </summary>
     public class BinaryExpression : IExpression
     {
         public IExpression Left { get; }

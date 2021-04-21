@@ -1,5 +1,10 @@
-﻿namespace Language.Parser.Statement
+﻿using Language.Interpreter;
+
+namespace Language.Parser.Statement
 {
+    /// <summary>
+    /// Representation of assign statement
+    /// </summary>
     public class AssignStatement : IStatement
     {
         public string Name { get; }

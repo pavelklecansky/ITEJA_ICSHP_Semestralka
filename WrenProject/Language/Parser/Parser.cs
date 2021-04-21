@@ -7,7 +7,7 @@ using Language.Parser.Statement;
 namespace Language.Parser
 {
     /// <summary>
-    /// Creates Syntax tree from list of tokens.
+    /// Parses tokens into block.
     /// </summary>
     public class Parser
     {
@@ -20,6 +20,10 @@ namespace Language.Parser
             _tokens = tokens;
         }
 
+        /// <summary>
+        /// Create block from tokens
+        /// </summary>
+        /// <returns>Block</returns>
         public Block Parse()
         {
             return Program();
@@ -40,10 +44,7 @@ namespace Language.Parser
 
             return false;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
+        
         private bool Verify(TokenType type)
         {
             if (End())

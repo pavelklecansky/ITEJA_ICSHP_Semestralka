@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
+using Language.Interpreter;
 using Language.Lexer;
 
 namespace Language.Parser.Statement
 {
+    /// <summary>
+    /// Representation of call statement
+    /// </summary>
     public class CallStatement : IStatement
     {
         public Token Class { get; }

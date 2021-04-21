@@ -1,5 +1,10 @@
-﻿namespace Language.Parser.Statement
+﻿using Language.Interpreter;
+
+namespace Language.Parser.Statement
 {
+    /// <summary>
+    /// Representation of creating variable
+    /// </summary>
     public class Var : IStatement
     {
         public string Name { get; }

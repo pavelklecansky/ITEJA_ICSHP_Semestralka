@@ -1,5 +1,10 @@
-﻿namespace Language.Parser
+﻿using Language.Interpreter;
+
+namespace Language.Parser
 {
+    /// <summary>
+    /// Representation of string
+    /// </summary>
     public class StringLiteral : IExpression
     {
         public string Value { get; }

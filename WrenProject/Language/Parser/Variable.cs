@@ -1,5 +1,10 @@
-﻿namespace Language.Parser
+﻿using Language.Interpreter;
+
+namespace Language.Parser
 {
+    /// <summary>
+    /// Representation of variable
+    /// </summary>
     public class Variable : IExpression
     {
         public string Name { get; }
