@@ -1,5 +1,8 @@
 ﻿namespace Language.Lexer
 {
+    /// <summary>
+    /// All available types of <see cref="Token"/>
+    /// </summary>
     public enum TokenType
     {
         // Jedno znakové tokeny
@@ -15,7 +18,7 @@
         LeftBracket,
         RightBracket,
         Modulo,
-        
+
         //Jedno nebo dvou charakterové tokeny
         Greater,
         GreaterEqual,
@@ -26,7 +29,7 @@
         NotEqual,
 
 
-        // Litrály
+        // Literály
         Identifier,
         Number,
         String,
