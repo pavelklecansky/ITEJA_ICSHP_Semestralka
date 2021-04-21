@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Interpreter\NativeLibrary\DrawingPanel.cs">
+      <Compile Update="Interpreter\NativeLibrary\TurtleGraphicsPanel.cs">
         <SubType>Form</SubType>
       </Compile>
     </ItemGroup>

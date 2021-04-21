@@ -3,12 +3,15 @@ using System.Windows.Forms;
 
 namespace Language.Interpreter.NativeLibrary
 {
-    internal partial class DrawingPanel : Form
+    /// <summary>
+    /// Form app for showing turtle graphics.
+    /// </summary>
+    internal partial class TurtleGraphicsPanel : Form
     {
 
         public Graphics Graphics { get; }
         
-        public DrawingPanel()
+        public TurtleGraphicsPanel()
         {
             Text = @"Turtle Graphics";
             InitializeComponent();

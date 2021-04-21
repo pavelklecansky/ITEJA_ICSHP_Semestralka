@@ -2,7 +2,7 @@
 
 namespace Language.Interpreter.NativeLibrary
 {
-    sealed partial class DrawingPanel
+    sealed partial class TurtleGraphicsPanel
     {
         /// <summary>
         /// Required designer variable.
@@ -50,7 +50,7 @@ namespace Language.Interpreter.NativeLibrary
             this.BackColor = System.Drawing.Color.DarkRed;
             this.ClientSize = new System.Drawing.Size(1184, 761);
             this.Controls.Add(this.Canvas);
-            this.Name = "DrawingPanel";
+            this.Name = "TurtleGraphicsPanel";
             this.Text = "DrawingPanel";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DrawingPanel_FormClosed);
             this.ResumeLayout(false);

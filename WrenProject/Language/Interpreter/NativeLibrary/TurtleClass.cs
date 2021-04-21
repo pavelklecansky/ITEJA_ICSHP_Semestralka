@@ -8,6 +8,9 @@ namespace Language.Interpreter.NativeLibrary
     /// </summary>
     internal abstract class TurtleClass
     {
+        /// <summary>
+        /// Rotate turtle to left
+        /// </summary>
         internal class Left : ICallable
         {
             public object Call(Interpreter interpreter, List<IExpression> arguments)
@@ -17,6 +20,9 @@ namespace Language.Interpreter.NativeLibrary
             }
         }
 
+        /// <summary>
+        /// Show turtle graphics
+        /// </summary>
         internal class Done : ICallable
         {
             public object Call(Interpreter interpreter, List<IExpression> arguments)
@@ -26,6 +32,9 @@ namespace Language.Interpreter.NativeLibrary
             }
         }
 
+        /// <summary>
+        /// Move turtle forwards
+        /// </summary>
         internal class Forward : ICallable
         {
             public object Call(Interpreter interpreter, List<IExpression> arguments)
@@ -44,7 +53,9 @@ namespace Language.Interpreter.NativeLibrary
             }
         }
 
-
+        /// <summary>
+        /// Rotate turtle to right
+        /// </summary>
         internal class Right : ICallable
         {
             public object Call(Interpreter interpreter, List<IExpression> arguments)

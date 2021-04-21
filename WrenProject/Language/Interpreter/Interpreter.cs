@@ -7,6 +7,9 @@ using Language.Parser.Statement;
 
 namespace Language.Interpreter
 {
+    /// <summary>
+    /// Wren interpreter.
+    /// </summary>
     public class Interpreter : IVisitor
     {
         private Block Block { get; }
@@ -42,11 +45,19 @@ namespace Language.Interpreter
             Block = block;
         }
 
+        /// <summary>
+        /// Interprets and executes block given in constructor.
+        /// </summary>
         public void Interpret()
         {
             Block.Accept(this);
         }
 
+        /// <summary>
+        /// Run assign statement
+        /// </summary>
+        /// <param name="assignStatement">Statement to run</param>
+        /// <returns>Assign value</returns>
         public object VisitAssignStmt(AssignStatement assignStatement)
         {
             var value = assignStatement.Value.Accept(this);
@@ -54,6 +65,12 @@ namespace Language.Interpreter
             return value;
         }
 
+        /// <summary>
+        /// Run call statement
+        /// </summary>
+        /// <param name="callStatement">Statement to run</param>
+        /// <returns>Call value</returns>
+        /// <exception cref="ArgumentException"></exception>
         public object VisitCallStmt(CallStatement callStatement)
         {
             var callClass = callStatement.Class;
@@ -72,6 +89,11 @@ namespace Language.Interpreter
             }
         }
 
+        /// <summary>
+        /// Run if statement
+        /// </summary>
+        /// <param name="ifStatement">Statement to run</param>
+        /// <returns>Null</returns>
         public object VisitIfStmt(IfStatement ifStatement)
         {
             if ((bool) ifStatement.Condition.Accept(this))
@@ -86,6 +108,11 @@ namespace Language.Interpreter
             return null;
         }
 
+        /// <summary>
+        /// Run while statement
+        /// </summary>
+        /// <param name="whileStatement">Statement to run</param>
+        /// <returns>Nulls</returns>
         public object VisitWhileStmt(WhileStatement whileStatement)
         {
             while ((bool) whileStatement.Condition.Accept(this))
@@ -96,6 +123,12 @@ namespace Language.Interpreter
             return null;
         }
 
+        /// <summary>
+        /// Evaluates a binary expression
+        /// </summary>
+        /// <param name="binary">Expression</param>
+        /// <returns>Result of the expression</returns>
+        /// <exception cref="ArgumentException">Unknown binary expression operator.</exception>
         public object VisitBinaryExpr(BinaryExpression binary)
         {
             var left = binary.Left.Accept(this);
@@ -126,10 +159,14 @@ namespace Language.Interpreter
                     return Modulo(left, right);
             }
 
-            throw new ArgumentException("Unknown expression operator.");
+            throw new ArgumentException("Unknown binary expression operator.");
         }
 
-
+        /// <summary>
+        /// Run block
+        /// </summary>
+        /// <param name="block">Block to run</param>
+        /// <returns>Null</returns>
         public object VisitBlock(Block block)
         {
             var oldEnvironment = _environment;
@@ -149,11 +186,22 @@ namespace Language.Interpreter
             return null;
         }
 
+        /// <summary>
+        /// Evalutes a number exression
+        /// </summary>
+        /// <param name="number">Number expression</param>
+        /// <returns>Value of number</returns>
         public object VisitNumber(Number number)
         {
             return number.Value;
         }
 
+        /// <summary>
+        /// Evaluates a unary expression
+        /// </summary>
+        /// <param name="unary">Expression</param>
+        /// <returns>Result of the expression</returns>
+        /// <exception cref="ArgumentException">Unknown symbol in unary expresion</exception>
         public object VisitUnaryExpression(UnaryExpression unary)
         {
             switch (unary.Operator.Type)
@@ -167,17 +215,32 @@ namespace Language.Interpreter
             throw new ArgumentException("Unknown symbol in unary expresion");
         }
 
+        /// <summary>
+        /// Creates new variable
+        /// </summary>
+        /// <param name="var">Variable</param>
+        /// <returns>Null</returns>
         public object VisitVar(Var var)
         {
             _environment.Define(var.Name, var.Value.Accept(this));
             return null;
         }
 
+        /// <summary>
+        /// Get existing variable
+        /// </summary>
+        /// <param name="variable">Variable</param>
+        /// <returns>Variable value</returns>
         public object VisitVariable(Variable variable)
         {
             return _environment.Get(variable.Name);
         }
 
+        /// <summary>
+        /// Evalutes a string exression
+        /// </summary>
+        /// <param name="expr">String expression</param>
+        /// <returns>Value of string</returns>
         public object VisitStringLiteral(StringLiteral expr)
         {
             return expr.Value;
