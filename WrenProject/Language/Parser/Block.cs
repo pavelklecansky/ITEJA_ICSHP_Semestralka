@@ -9,9 +9,9 @@ namespace Language.Parser
     /// </summary>
     public class Block : IElement
     {
-        public List<IStatement> Statements { get; }
+        public IList<IStatement> Statements { get; }
 
-        public Block(List<IStatement> statements)
+        public Block(IList<IStatement> statements)
         {
             Statements = statements;
         }
