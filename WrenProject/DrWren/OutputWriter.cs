@@ -12,7 +12,6 @@ namespace DrWren
         {
             _output = output;
             Encoding = Encoding.Default;
-            
         }
 
         public override void WriteLine(char value)

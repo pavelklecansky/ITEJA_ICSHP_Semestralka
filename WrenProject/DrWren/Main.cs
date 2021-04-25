@@ -42,7 +42,7 @@ namespace DrWren
             }
 
             HighlightText();
-            
+
             TextBox.Select(0, 0);
         }
 
@@ -162,14 +162,25 @@ namespace DrWren
 
         private void RunButton_Click(object sender, EventArgs e)
         {
-            OutputTextBox.Clear();
-            Language.Wren.Run(TextBox.Text, new OutputWriter(OutputTextBox));
+            RunWren();
         }
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            RunWren();
+        }
+
+        private void OnRanCode(object source, CodeEventArgs e)
+        {
+            CodeRunningTime.Text = e.CodeRanTime + " ms";
+        }
+
+        private void RunWren()
+        {
             OutputTextBox.Clear();
-            Language.Wren.Run(TextBox.Text, new OutputWriter(OutputTextBox));
+            var runner = new CodeRunner(TextBox.Text, new OutputWriter(OutputTextBox));
+            runner.CodeRan += OnRanCode;
+            runner.Run();
         }
     }
 }

@@ -58,6 +58,7 @@
             this.PrintDocument = new System.Drawing.Printing.PrintDocument();
             this.errorslabel = new System.Windows.Forms.Label();
             this.OutputTextBox = new System.Windows.Forms.RichTextBox();
+            this.CodeRunningTime = new System.Windows.Forms.Label();
             this.Menu.SuspendLayout();
             this.ToolBar.SuspendLayout();
             this.SuspendLayout();
@@ -304,19 +305,30 @@
             // 
             this.OutputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.OutputTextBox.Location = new System.Drawing.Point(0, 410);
+            this.OutputTextBox.Location = new System.Drawing.Point(0, 405);
             this.OutputTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.OutputTextBox.Name = "OutputTextBox";
             this.OutputTextBox.ReadOnly = true;
-            this.OutputTextBox.Size = new System.Drawing.Size(933, 230);
+            this.OutputTextBox.Size = new System.Drawing.Size(933, 138);
             this.OutputTextBox.TabIndex = 4;
             this.OutputTextBox.Text = "";
+            // 
+            // CodeRunningTime
+            // 
+            this.CodeRunningTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CodeRunningTime.Location = new System.Drawing.Point(851, 546);
+            this.CodeRunningTime.Name = "CodeRunningTime";
+            this.CodeRunningTime.Size = new System.Drawing.Size(82, 15);
+            this.CodeRunningTime.TabIndex = 6;
+            this.CodeRunningTime.Text = "0 ms";
+            this.CodeRunningTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(933, 568);
+            this.Controls.Add(this.CodeRunningTime);
             this.Controls.Add(this.OutputTextBox);
             this.Controls.Add(this.errorslabel);
             this.Controls.Add(this.TextBox);
@@ -367,5 +379,6 @@
         private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
         private System.Windows.Forms.Label errorslabel;
         private System.Windows.Forms.RichTextBox OutputTextBox;
+        private System.Windows.Forms.Label CodeRunningTime;
     }
 }
