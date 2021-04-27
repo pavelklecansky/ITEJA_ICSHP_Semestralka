@@ -3,7 +3,7 @@
 namespace Language.Parser
 {
     /// <summary>
-    /// Interface for all elements in interpreter.
+    /// Interface for all elements in parser.
     /// </summary>
     public interface IElement
     {
