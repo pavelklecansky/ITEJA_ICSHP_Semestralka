@@ -1,0 +1,3 @@
+Literals|-23296
+Operators|-16744193
+Keywords|-65536

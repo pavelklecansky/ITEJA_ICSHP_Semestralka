@@ -9,6 +9,9 @@ namespace DrWren
         public long CodeRunningTime { get; set; }
     }
 
+    /// <summary>
+    /// Class for running wren source code.
+    /// </summary>
     public class CodeRunner
     {
         private readonly string _sourceCode;
@@ -26,6 +29,9 @@ namespace DrWren
             _writer = writer;
         }
 
+        /// <summary>
+        /// Run source code pass to the constructor.
+        /// </summary>
         public void Run()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();

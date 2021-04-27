@@ -9,6 +9,9 @@ namespace DrWren
         public ColorSettings.SyntaxColor Colors { get; set; }
     }
 
+    /// <summary>
+    /// Class for working with color settings.
+    /// </summary>
     public class ColorSettings
     {
         private static readonly string SettingsFilePath = @"./ColorSettings.txt";
@@ -32,19 +35,25 @@ namespace DrWren
             }
         }
 
-
         public delegate void ColorSettingsEventHandler(object source, ColorEventArgs args);
 
         public event ColorSettingsEventHandler ColorSettingsChanged;
 
-        public SyntaxColor Colors { get; }
+        private SyntaxColor Colors { get; set; }
 
+        /// <summary>
+        /// Open color settings
+        /// </summary>
         public void Open()
         {
             var settings = new ColorSettingsForm(this);
             settings.ShowDialog();
         }
 
+        /// <summary>
+        /// Load color settings from file.
+        /// </summary>
+        /// <returns></returns>
         public SyntaxColor Load()
         {
             if (!File.Exists(SettingsFilePath))
@@ -52,42 +61,47 @@ namespace DrWren
                 // Create a file to write to.
                 using (StreamWriter sw = File.CreateText(SettingsFilePath))
                 {
-                    sw.WriteLine("Literals-Yellow");
-                    sw.WriteLine("Operators-Red");
-                    sw.WriteLine("Keywords-Red");
+                    sw.WriteLine("Literals|" + Color.Orange.ToArgb());
+                    sw.WriteLine("Operators|" + Color.Red.ToArgb());
+                    sw.WriteLine("Keywords|" + Color.Red.ToArgb());
                 }
 
-                return new SyntaxColor(Color.Yellow, Color.Red, Color.Red);
+                return new SyntaxColor(Color.Orange, Color.Red, Color.Red);
             }
 
 
             string[] lines = File.ReadAllLines(SettingsFilePath);
-            var literals = Color.FromName(lines[0].Split("-")[1]);
-            var operators = Color.FromName(lines[1].Split("-")[1]);
-            var keywords = Color.FromName(lines[2].Split("-")[1]);
+            var literals = Color.FromArgb(int.Parse(lines[0].Split("|")[1]));
+            var operators = Color.FromArgb(int.Parse(lines[1].Split("|")[1]));
+            var keywords = Color.FromArgb(int.Parse(lines[2].Split("|")[1]));
             return new SyntaxColor(literals, operators, keywords);
         }
 
 
+        /// <summary>
+        /// Save color settings to file.
+        /// </summary>
         public void Save(Color literals, Color operators, Color keywords)
         {
             if (!File.Exists(SettingsFilePath))
             {
                 using (StreamWriter sw = File.CreateText(SettingsFilePath))
                 {
-                    sw.WriteLine("Literals-Yellow");
-                    sw.WriteLine("Operators-Red");
-                    sw.WriteLine("Keywords-Red");
+                    sw.WriteLine("Literals|" + Color.Orange.ToArgb());
+                    sw.WriteLine("Operators|" + Color.Red.ToArgb());
+                    sw.WriteLine("Keywords|" + Color.Red.ToArgb());
                 }
             }
-            
+
             using (var sw = File.CreateText(SettingsFilePath))
             {
-                sw.WriteLine("Literals-" + literals.Name);
-                sw.WriteLine("Operators-" + operators.Name);
-                sw.WriteLine("Keywords-" + keywords.Name);
+                sw.WriteLine("Literals|" + literals.ToArgb());
+                sw.WriteLine("Operators|" + operators.ToArgb());
+                sw.WriteLine("Keywords|" + keywords.ToArgb());
             }
-            
+
+            Colors = new SyntaxColor(literals, operators, keywords);
+
             OnColorSettingChanged();
         }
 
@@ -101,9 +115,9 @@ namespace DrWren
 
         public class SyntaxColor
         {
-            public Color Literals { get; set; }
-            public Color Operators { get; set; }
-            public Color Keywords { get; set; }
+            public Color Literals { get; }
+            public Color Operators { get; }
+            public Color Keywords { get; }
 
             public SyntaxColor(Color literals, Color operators, Color keywords)
             {
