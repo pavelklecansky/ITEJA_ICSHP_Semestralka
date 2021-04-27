@@ -14,6 +14,13 @@ namespace DrWren
             InitializeComponent();
             ChangeTitleName("Untitled");
             TextBox.KeyUp += TextBoxOnTextChanged;
+            colorToolStripMenuItem.Click += colorToolStripMenuItem_Click;
+        }
+
+        private void colorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var settings = ColorSettings.Instance;
+            settings.Open();
         }
 
         private void TextBoxOnTextChanged(object sender, EventArgs e)
@@ -172,7 +179,7 @@ namespace DrWren
 
         private void OnRanCode(object source, CodeEventArgs e)
         {
-            CodeRunningTime.Text = e.CodeRanTime + " ms";
+            CodeRunningTime.Text = e.CodeRunningTime + " ms";
         }
 
         private void RunWren()

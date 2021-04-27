@@ -12,9 +12,18 @@ namespace DrWren
         private static IList<Regex> Operators { get; } = new List<Regex>();
         private static IList<Regex> Literals { get; } = new List<Regex>();
 
+        private static ColorSettings.SyntaxColor Colors;
+
+        private static RichTextBox CurrentTextBox;
+        private static readonly ColorSettings _settings;
+
 
         static SyntaxHighlighter()
         {
+            _settings = ColorSettings.Instance;
+            Colors = _settings.Load();
+            _settings.ColorSettingsChanged += OnColorSettingChanged;
+
             //Keywords initialization
             Keywords.Add(new Regex("var", RegexOptions.Compiled));
             Keywords.Add(new Regex("while", RegexOptions.Compiled));
@@ -32,23 +41,30 @@ namespace DrWren
             Operators.Add(new Regex("-", RegexOptions.Compiled));
             Operators.Add(new Regex("/", RegexOptions.Compiled));
             Operators.Add(new Regex("%", RegexOptions.Compiled));
-            
+
             // Literals
             Literals.Add(new Regex("(\"[^\"\r\n]*\")", RegexOptions.Compiled));
         }
 
         public static void Highlight(RichTextBox textBox)
         {
+            CurrentTextBox = textBox;
             var originalIndex = textBox.SelectionStart;
             var originalLength = textBox.SelectionLength;
             var originalColor = Color.Black;
             ClearColor(textBox, originalColor);
-            ChangeTextColor(textBox, Keywords, Color.Red);
-            ChangeTextColor(textBox, Operators, Color.Red);
-            ChangeTextColor(textBox, Literals, Color.Orange);
+            ChangeTextColor(textBox, Keywords, Colors.Keywords);
+            ChangeTextColor(textBox, Operators, Colors.Operators);
+            ChangeTextColor(textBox, Literals, Colors.Literals);
             textBox.SelectionStart = originalIndex;
             textBox.SelectionLength = originalLength;
             textBox.SelectionColor = originalColor;
+        }
+
+        private static void OnColorSettingChanged(object source, ColorEventArgs args)
+        {
+            Colors = _settings.Load();
+            Highlight(CurrentTextBox);
         }
 
         private static void ClearColor(RichTextBox textBox, Color color)

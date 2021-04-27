@@ -6,7 +6,7 @@ namespace DrWren
 {
     public class CodeEventArgs : EventArgs
     {
-        public long CodeRanTime { get; set; }
+        public long CodeRunningTime { get; set; }
     }
 
     public class CodeRunner
@@ -14,11 +14,11 @@ namespace DrWren
         private readonly string _sourceCode;
         private readonly TextWriter _writer;
 
-        public delegate void CodeRanEventHandler(object source, CodeEventArgs args);
+        public delegate void CodeRunnerEventHandler(object source, CodeEventArgs args);
 
-        public event CodeRanEventHandler CodeRan;
+        public event CodeRunnerEventHandler CodeRan;
 
-        private long CodeRanTime { get; set; }
+        private long CodeRunningTime { get; set; }
 
         public CodeRunner(string sourceCode, TextWriter writer)
         {
@@ -41,7 +41,7 @@ namespace DrWren
                 watch.Stop();
             }
 
-            CodeRanTime = watch.ElapsedMilliseconds;
+            CodeRunningTime = watch.ElapsedMilliseconds;
             OnCodeRan();
         }
 
@@ -49,7 +49,7 @@ namespace DrWren
         {
             if (CodeRan != null)
             {
-                CodeRan(this, new CodeEventArgs {CodeRanTime = CodeRanTime});
+                CodeRan(this, new CodeEventArgs {CodeRunningTime = CodeRunningTime});
             }
         }
     }

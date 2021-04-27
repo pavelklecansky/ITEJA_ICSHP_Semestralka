@@ -59,6 +59,8 @@
             this.errorslabel = new System.Windows.Forms.Label();
             this.OutputTextBox = new System.Windows.Forms.RichTextBox();
             this.CodeRunningTime = new System.Windows.Forms.Label();
+            this.settingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu.SuspendLayout();
             this.ToolBar.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +70,8 @@
             this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
-            this.wrenToolStripMenuItem});
+            this.wrenToolStripMenuItem,
+            this.settingToolStripMenuItem});
             this.Menu.Location = new System.Drawing.Point(0, 0);
             this.Menu.Name = "Menu";
             this.Menu.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
@@ -323,6 +326,20 @@
             this.CodeRunningTime.Text = "0 ms";
             this.CodeRunningTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // settingToolStripMenuItem
+            // 
+            this.settingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.colorToolStripMenuItem});
+            this.settingToolStripMenuItem.Name = "settingToolStripMenuItem";
+            this.settingToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.settingToolStripMenuItem.Text = "Setting";
+            // 
+            // colorToolStripMenuItem
+            // 
+            this.colorToolStripMenuItem.Name = "colorToolStripMenuItem";
+            this.colorToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.colorToolStripMenuItem.Text = "Color";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -380,5 +397,7 @@
         private System.Windows.Forms.Label errorslabel;
         private System.Windows.Forms.RichTextBox OutputTextBox;
         private System.Windows.Forms.Label CodeRunningTime;
+        private System.Windows.Forms.ToolStripMenuItem settingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem colorToolStripMenuItem;
     }
 }
