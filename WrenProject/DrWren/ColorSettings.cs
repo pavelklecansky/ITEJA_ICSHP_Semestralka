@@ -14,9 +14,9 @@ namespace DrWren
     /// </summary>
     public class ColorSettings
     {
-        private static readonly string SettingsFilePath = @"./ColorSettings.txt";
+        private const string SettingsFilePath = @"./ColorSettings.txt";
 
-        private static ColorSettings instance;
+        private static ColorSettings _instance;
 
         private ColorSettings()
         {
@@ -26,12 +26,12 @@ namespace DrWren
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
-                    instance = new ColorSettings();
+                    _instance = new ColorSettings();
                 }
 
-                return instance;
+                return _instance;
             }
         }
 
@@ -59,7 +59,7 @@ namespace DrWren
             if (!File.Exists(SettingsFilePath))
             {
                 // Create a file to write to.
-                using (StreamWriter sw = File.CreateText(SettingsFilePath))
+                using (var sw = File.CreateText(SettingsFilePath))
                 {
                     sw.WriteLine("Literals|" + Color.Orange.ToArgb());
                     sw.WriteLine("Operators|" + Color.Red.ToArgb());
@@ -70,7 +70,7 @@ namespace DrWren
             }
 
 
-            string[] lines = File.ReadAllLines(SettingsFilePath);
+            var lines = File.ReadAllLines(SettingsFilePath);
             var literals = Color.FromArgb(int.Parse(lines[0].Split("|")[1]));
             var operators = Color.FromArgb(int.Parse(lines[1].Split("|")[1]));
             var keywords = Color.FromArgb(int.Parse(lines[2].Split("|")[1]));
@@ -85,7 +85,7 @@ namespace DrWren
         {
             if (!File.Exists(SettingsFilePath))
             {
-                using (StreamWriter sw = File.CreateText(SettingsFilePath))
+                using (var sw = File.CreateText(SettingsFilePath))
                 {
                     sw.WriteLine("Literals|" + Color.Orange.ToArgb());
                     sw.WriteLine("Operators|" + Color.Red.ToArgb());
